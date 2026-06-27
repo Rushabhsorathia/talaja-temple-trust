@@ -19,3 +19,17 @@
 | [M4-T10](M4-T10-Audit-Trail.md) | Audit trail (activity, transaction, config) | 5 |
 | [M4-T11](M4-T11-User-Security-Mgmt.md) | User & security management | 5 |
 | [M4-T12](M4-T12-Shop-Admin.md) | Shop/order fulfilment admin | 5 |
+
+## Build status (✅ implemented in `../talaja-temple-trust/`)
+- **T1 Auth/RBAC:** Filament panel + spatie/laravel-permission (Super Admin/Trustee/Admin/Officer/Staff/Devotee roles), seeded permissions; admin login gated by `User::canAccessPanel()`.
+- **T2 Dashboard:** `StatsOverview`, `DonationChart` (14-day), `RecentDonations` widgets.
+- **T3 Donations:** `DonationResource` (CRUD + status/80G gateway reconcile).
+- **T4 Accommodation:** `RoomBookingResource` w/ Check-in / Check-out / Cancel actions (auto housekeeping), `RoomResource`, `HousekeepingLogResource`.
+- **T5 Finance:** `ReceiptResource`, `PaymentResource`, `BankStatementResource` (reconciliation status).
+- **T6 CMS:** already done in M2.
+- **T7 Feedback:** `FeedbackResource` triage.
+- **T8 Communications:** `NotificationTemplateResource` + `NotificationLogResource` + `NotificationService` (SMS/email/WhatsApp).
+- **T9 Live Darshan:** `LiveDarshanConfigResource`.
+- **T10 Audit:** spatie/activitylog wired on User.
+- **T11 Users:** Filament default + role assignment (via spatie).
+- **T12 Shop:** `OrderResource` fulfilment + `ProductResource`.

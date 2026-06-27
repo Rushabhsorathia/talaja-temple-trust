@@ -17,25 +17,26 @@ class SettingResource extends Resource
 {
     protected static ?string $model = Setting::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationGroup = 'Configuration';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('key')->required(),
+            Forms\Components\Textarea::make('value')->rows(3),
+            Forms\Components\TextInput::make('group')->default('general'),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                //
+        return $table->columns([
+                Tables\Columns\TextColumn::make('key')->searchable(),
+                Tables\Columns\TextColumn::make('value')->limit(40),
+                Tables\Columns\TextColumn::make('group')->badge(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([Tables\Filters\Filter::make('placeholder')])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

@@ -17,25 +17,26 @@ class HousekeepingLogResource extends Resource
 {
     protected static ?string $model = HousekeepingLog::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-sparkles';
+    protected static ?string $navigationGroup = 'Accommodation';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            Forms\Components\Select::make('room_id')->relationship('room','number')->required(),
+            Forms\Components\Select::make('status')->options(['clean'=>'Clean','dirty'=>'Dirty','inspected'=>'Inspected'])->required(),
+            Forms\Components\Textarea::make('note')->rows(2),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                //
+        return $table->columns([
+                Tables\Columns\TextColumn::make('room.number')->label('Room'),
+                Tables\Columns\TextColumn::make('status')->badge(),
+                Tables\Columns\TextColumn::make('created_at')->dateTime('d-m-Y'),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([Tables\Filters\Filter::make('placeholder')])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

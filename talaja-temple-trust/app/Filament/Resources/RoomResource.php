@@ -17,25 +17,29 @@ class RoomResource extends Resource
 {
     protected static ?string $model = Room::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-home-modern';
+    protected static ?string $navigationGroup = 'Accommodation';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            Forms\Components\Select::make('room_type_id')->relationship('type','name')->required(),
+            Forms\Components\TextInput::make('number')->required(),
+            Forms\Components\TextInput::make('floor'),
+            Forms\Components\Select::make('housekeeping_status')->options(['clean'=>'Clean','dirty'=>'Dirty','inspected'=>'Inspected'])->default('clean'),
+            Forms\Components\Toggle::make('is_active')->default(true),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                //
+        return $table->columns([
+                Tables\Columns\TextColumn::make('number')->searchable(),
+                Tables\Columns\TextColumn::make('type.name')->label('Type'),
+                Tables\Columns\TextColumn::make('housekeeping_status')->badge()->colors(['success'=>'clean','danger'=>'dirty','info'=>'inspected']),
+                Tables\Columns\IconColumn::make('is_active')->boolean(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([Tables\Filters\Filter::make('placeholder')])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

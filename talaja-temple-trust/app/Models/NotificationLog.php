@@ -6,13 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class NotificationTemplate extends Model
-{
-    protected $fillable = ['code', 'channel', 'subject', 'body', 'body_gu', 'variables', 'is_active'];
-
-    protected $casts = ['variables' => 'array', 'is_active' => 'boolean'];
-}
-
 class NotificationLog extends Model
 {
     protected $fillable = [

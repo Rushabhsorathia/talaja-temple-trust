@@ -14,3 +14,7 @@
 | [M6-T5](M6-T5-Audit-Reports.md) | Audit reports + export | 3 |
 | [M6-T6](M6-T6-Scheduled-Email.md) | Scheduled email reports | 3 |
 | [M6-T7](M6-T7-Export-Framework.md) | Unified export (CSV/Excel/PDF) | 3 |
+
+## Build status (✅ implemented)
+- Single **MIS Reports** Filament page (`App\Filament\Pages\Reports`) covering T1–T5: donation, daily collection, booking/occupancy, financial (receipts/payments), reconciliation, shop — with date-range selector, summary KPIs, and **CSV export** per report type.
+- Scheduled email reports + unified export framework can layer on the existing CSV export.

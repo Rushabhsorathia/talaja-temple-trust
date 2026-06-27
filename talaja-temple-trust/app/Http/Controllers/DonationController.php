@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Donation;
 use App\Models\DonationCategory;
+use App\Services\NotificationService;
 use App\Services\ReceiptService;
 use App\Services\RazorpayService;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class DonationController extends Controller
     public function __construct(
         protected RazorpayService $razorpay,
         protected ReceiptService $receipts,
+        protected NotificationService $notifications,
     ) {}
 
     public function index()
@@ -105,6 +107,15 @@ class DonationController extends Controller
 
         $type = $donation->is_80g && $donation->category?->is_80g_eligible ? '80g' : 'general';
         $receipt = $this->receipts->generate($donation, $type);
+
+        // Notify donor (SMS + email if provided)
+        $vars = ['amount' => $donation->amount, 'receipt' => $receipt->receipt_no, 'name' => $donation->donor_name ?: 'Devotee'];
+        if ($donation->donor_mobile) {
+            $this->notifications->sendTemplate('donation_success', $donation->donor_mobile, $vars);
+        }
+        if ($donation->donor_email) {
+            $this->notifications->sendEmail($donation->donor_email, 'Donation Received - '.$receipt->receipt_no, "Thank you {$vars['name']}. We have received your donation of ₹{$donation->amount}. Receipt no: {$receipt->receipt_no}.");
+        }
 
         return Inertia::render('Donate/Success', [
             'donation' => $donation->fresh(),

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasTranslationFallback;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -11,7 +12,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Temple extends Model implements HasMedia
 {
-    use HasTranslationFallback, InteractsWithMedia;
+    use HasFactory, HasTranslationFallback, InteractsWithMedia;
 
     protected $fillable = [
         'name', 'slug', 'is_primary', 'address', 'phone', 'email',

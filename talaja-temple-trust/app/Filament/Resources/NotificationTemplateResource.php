@@ -17,25 +17,30 @@ class NotificationTemplateResource extends Resource
 {
     protected static ?string $model = NotificationTemplate::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-envelope';
+    protected static ?string $navigationGroup = 'Communication';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('code')->required()->unique(ignoreRecord:true),
+            Forms\Components\Select::make('channel')->options(['sms'=>'SMS','email'=>'Email','whatsapp'=>'WhatsApp'])->required(),
+            Forms\Components\TextInput::make('subject'),
+            Forms\Components\Textarea::make('body')->required()->rows(4),
+            Forms\Components\Textarea::make('body_gu')->label('Body (Gujarati)')->rows(4),
+            Forms\Components\Toggle::make('is_active')->default(true),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                //
+        return $table->columns([
+                Tables\Columns\TextColumn::make('code')->searchable(),
+                Tables\Columns\TextColumn::make('channel')->badge(),
+                Tables\Columns\TextColumn::make('subject')->limit(40),
+                Tables\Columns\IconColumn::make('is_active')->boolean(),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([Tables\Filters\Filter::make('placeholder')])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

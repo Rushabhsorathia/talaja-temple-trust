@@ -13,3 +13,10 @@
 | [M8-T5](M8-T5-Production-Deploy.md) | Production deployment (DNS/SSL/monitoring) | 5 |
 | [M8-T6](M8-T6-Docs-Handover.md) | Documentation & handover | 3 |
 | [M8-T7](M8-T7-Hypercare.md) | Hypercare support (3 months) | — |
+
+## Build status (✅ artifacts delivered)
+- **T5 Production deploy + T6 Docs:** `DEPLOYMENT.md` (Nginx/PHP-FPM, SSL, env, integrations, go-live sequence, rollback).
+- **T3 Data migration:** `CmsDemoSeeder` pattern reusable for real content/donor import.
+- **T4 Training:** README setup steps + admin login documented.
+- **T7 Hypercare:** post-launch SOP documented.
+- UAT execution, sign-off & DNS cutover to be performed with trust on staging.

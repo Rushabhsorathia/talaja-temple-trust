@@ -8,8 +8,10 @@ use App\Models\DonationCategory;
 use App\Models\Faq;
 use App\Models\Festival;
 use App\Models\Gallery;
+use App\Models\LiveDarshanConfig;
 use App\Models\MeetingHall;
 use App\Models\News;
+use App\Models\NotificationTemplate;
 use App\Models\Product;
 use App\Models\Room;
 use App\Models\RoomType;
@@ -97,6 +99,19 @@ class CmsDemoSeeder extends Seeder
         // Shop products
         foreach ([['Prasadam Pack', 101, 'Prasad'], ['Holy Book', 251, 'Books'], ['Idol (small)', 551, 'Souvenirs'], ['Photo Frame', 351, 'Souvenirs']] as [$name, $price, $cat]) {
             Product::create(['slug' => \Illuminate\Support\Str::slug($name), 'name' => $name, 'price' => $price, 'stock' => 50, 'category' => $cat, 'is_active' => true]);
+        }
+
+        // Live darshan
+        LiveDarshanConfig::create(['stream_url' => 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'is_live' => true, 'start_time' => '06:00', 'end_time' => '20:00']);
+
+        // Notification templates
+        foreach ([
+            ['donation_success', 'sms', 'Dear {name}, we received your donation of Rs.{amount}. Receipt: {receipt}. Thank you.'],
+            ['booking_confirm', 'sms', 'Dear {name}, your booking {booking} is confirmed.'],
+            ['order_placed', 'email', 'Dear {name}, your order {order} has been placed.'],
+            ['otp', 'sms', 'Your Talaja Temple OTP is {otp}. Valid for 5 minutes.'],
+        ] as [$code, $channel, $body]) {
+            NotificationTemplate::create(['code' => $code, 'channel' => $channel, 'subject' => $code, 'body' => $body, 'is_active' => true]);
         }
     }
 }

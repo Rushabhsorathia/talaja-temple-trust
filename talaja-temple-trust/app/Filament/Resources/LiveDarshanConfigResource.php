@@ -17,25 +17,29 @@ class LiveDarshanConfigResource extends Resource
 {
     protected static ?string $model = LiveDarshanConfig::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-video-camera';
+    protected static ?string $navigationGroup = 'Configuration';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                //
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('stream_url')->required(),
+            Forms\Components\Toggle::make('is_live')->default(false),
+            Forms\Components\TextInput::make('poster_path'),
+            Forms\Components\TimePicker::make('start_time'),
+            Forms\Components\TimePicker::make('end_time'),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                //
+        return $table->columns([
+                Tables\Columns\TextColumn::make('stream_url')->limit(50),
+                Tables\Columns\IconColumn::make('is_live')->boolean(),
+                Tables\Columns\TextColumn::make('start_time'),
+                Tables\Columns\TextColumn::make('end_time'),
             ])
-            ->filters([
-                //
-            ])
+            ->filters([Tables\Filters\Filter::make('placeholder')])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

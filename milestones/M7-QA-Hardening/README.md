@@ -14,3 +14,11 @@
 | [M7-T5](M7-T5-Cross-Browser.md) | Cross-browser & device matrix | 3 |
 | [M7-T6](M7-T6-Backup-Restore.md) | Backup + disaster recovery | 5 |
 | [M7-T7](M7-T7-Monitoring-Alerting.md) | Monitoring, logging, alerting | 3 |
+
+## Build status (✅ partially implemented; some items need prod env)
+- **T1 Tests:** `tests/Feature/PublicSiteTest` (home/news/contact/shop) passing; Temple/News factories added.
+- **T2 Security:** throttle on OTP/donate; admin RBAC gate; APP_DEBUG flagging; `composer audit`.
+- **T3 Performance:** Redis cache/session config, Vite build, image lazy-load in views.
+- **T6 Backup:** `app:backup-database` command (sqlite/mysql + S3 mirror + 30-day prune), scheduled daily 02:00.
+- **T7 Monitoring:** `/api/health` endpoint; Sentry/Horizon ready to wire via env.
+- Cross-browser, accessibility, DR drill to be performed on staging/prod.
