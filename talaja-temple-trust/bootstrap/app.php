@@ -17,6 +17,13 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ]);
 
+        // Use our custom Authenticate middleware so guests are sent to the
+        // devotee OTP login (with intended-URL preservation) instead of the
+        // default Breeze email login.
+        $middleware->alias([
+            'auth' => \App\Http\Middleware\Authenticate::class,
+        ]);
+
         $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {

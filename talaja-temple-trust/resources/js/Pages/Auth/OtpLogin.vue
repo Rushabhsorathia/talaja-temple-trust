@@ -2,7 +2,7 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 
-const props = defineProps({ status: String, errors: Object, mobile: String });
+const props = defineProps({ status: String, errors: Object, mobile: String, loginPrompt: String });
 
 const sendForm = useForm({ mobile: '' });
 const verifyForm = useForm({ mobile: '', otp: '', name: '' });
@@ -19,6 +19,10 @@ const verifyOtp = () => verifyForm.post('/otp/verify');
         <Head><title>Devotee Login (OTP)</title></Head>
         <div class="mx-auto max-w-md">
             <h1 class="mb-6 text-center font-serif text-2xl text-maroon-900">Devotee Login</h1>
+
+            <div v-if="loginPrompt" class="mb-4 rounded-lg bg-saffron-50 p-3 text-sm text-saffron-700">
+                🔐 {{ loginPrompt }} You'll be returned to your page after login.
+            </div>
 
             <div v-if="status" class="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-700">{{ status }}</div>
 
