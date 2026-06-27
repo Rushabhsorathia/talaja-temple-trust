@@ -311,7 +311,7 @@ return new class extends Migration
             $table->enum('status', ['queued', 'sent', 'failed', 'delivered'])->default('queued');
             $table->string('provider_message_id')->nullable();
             $table->text('error')->nullable();
-            $table->morphs('notifiable');
+            $table->nullableMorphs('notifiable');
             $table->timestamp('sent_at')->nullable();
             $table->timestamps();
 
