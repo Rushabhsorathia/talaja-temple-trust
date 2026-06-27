@@ -14,12 +14,11 @@ class OtpController extends Controller
 {
     public function show()
     {
-        // If the user was redirected here from a protected page (e.g. clicked
-        // "Book Now" while logged out), show a contextual prompt.
-        $hasIntended = session()->has('url.intended');
-
-        return Inertia::render('Auth/OtpLogin', [
-            'loginPrompt' => $hasIntended ? 'Please log in to continue.' : null,
+        // The unified login page handles OTP. Redirect there (preset OTP tab).
+        return Inertia::render('Auth/Login', [
+            'canResetPassword' => \Illuminate\Support\Facades\Route::has('password.request'),
+            'loginPrompt' => session()->has('url.intended') ? 'Please log in to continue.' : null,
+            'presetMethod' => 'otp',
         ]);
     }
 

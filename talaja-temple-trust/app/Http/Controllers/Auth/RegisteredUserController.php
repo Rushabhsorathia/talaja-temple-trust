@@ -21,7 +21,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        // Registration is handled inside the unified login page (Email → Sign Up tab).
+        return Inertia::render('Auth/Login', [
+            'canResetPassword' => \Illuminate\Support\Facades\Route::has('password.request'),
+            'presetMode' => 'signup',
+        ]);
     }
 
     /**

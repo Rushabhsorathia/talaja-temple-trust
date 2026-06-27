@@ -181,7 +181,7 @@ const logout = () => {
                         </transition>
                     </div>
                     <!-- Logged out: login -->
-                    <Link v-else href="/otp/login" class="hidden items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-saffron-300 hover:bg-saffron-50 hover:text-saffron-700 lg:inline-flex">
+                    <Link v-else href="/login" class="hidden items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-saffron-300 hover:bg-saffron-50 hover:text-saffron-700 lg:inline-flex">
                         <User :size="16" /> Login
                     </Link>
 
@@ -252,7 +252,7 @@ const logout = () => {
                     <div class="grid grid-cols-2 gap-2">
                         <Link href="/donate" class="flex items-center justify-center gap-1.5 rounded-full bg-saffron-500 px-4 py-2.5 text-sm font-semibold text-white" @click="closeAll"><HandHeart :size="16" /> Donate</Link>
                         <Link v-if="isDevotee" href="/dashboard" class="flex items-center justify-center gap-1.5 rounded-full border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700" @click="closeAll"><LayoutGrid :size="16" /> Account</Link>
-                        <Link v-else href="/otp/login" class="flex items-center justify-center gap-1.5 rounded-full border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700" @click="closeAll"><User :size="16" /> Login</Link>
+                        <Link v-else href="/login" class="flex items-center justify-center gap-1.5 rounded-full border border-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-700" @click="closeAll"><User :size="16" /> Login</Link>
                     </div>
                     <div class="mt-3 flex items-center justify-center gap-4 text-xs">
                         <Link href="/change-language/en" :class="{ 'font-bold text-saffron-700': locale === 'en' }" @click="closeAll">English</Link>

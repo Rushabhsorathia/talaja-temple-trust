@@ -82,8 +82,11 @@
 .fi-sidebar .fi-sidebar-item-icon {
     color: #f0c08a; /* soft saffron */
 }
-.fi-sidebar .fi-sidebar-item-button:hover {
-    background-color: rgba(255, 255, 255, 0.07);
+/* Hover — Filament adds a light bg-gray-100; override it with a warm wash */
+.fi-sidebar .fi-sidebar-item-button:hover,
+.fi-sidebar .fi-sidebar-item-button:focus-visible {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-image: none;
 }
 .fi-sidebar .fi-sidebar-item-button:hover .fi-sidebar-item-label {
     color: #ffffff;
@@ -92,17 +95,22 @@
     color: #ffd9a8;
 }
 
-/* Active item — gold highlight + accent bar */
-.fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-button {
-    background-image: linear-gradient(90deg, rgba(201, 162, 39, 0.32), rgba(201, 162, 39, 0.05));
-    box-shadow: inset 3px 0 0 0 #e6b85c;
+/* Active item — solid saffron pill (opaque, so no gray bleed) with a
+   gold accent bar and white text for clear, legible contrast. */
+.fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-button,
+.fi-sidebar .fi-sidebar-item-active > .fi-sidebar-item-button {
+    background-color: #c74808 !important; /* saffron-700, opaque */
+    background-image: linear-gradient(135deg, #f06106 0%, #c74808 100%);
+    box-shadow: inset 3px 0 0 0 #f0c674, 0 4px 14px -6px rgba(0, 0, 0, 0.55);
 }
-.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label {
-    color: #fff3d6;
+.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label,
+.fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-label {
+    color: #ffffff !important;
     font-weight: 600;
 }
-.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
-    color: #f4cd6a; /* gold */
+.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-icon,
+.fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: #ffffff !important;
 }
 
 /* Sidebar toggle / misc icon buttons inside the sidebar */
