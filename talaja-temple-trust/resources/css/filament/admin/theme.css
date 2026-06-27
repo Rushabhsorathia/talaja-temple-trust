@@ -39,35 +39,48 @@
 }
 
 /* ================================================================== *
- * SIDEBAR — rich maroon with cream/gold text and a gold active state
+ * SIDEBAR — clean light theme with saffron accents (modern & airy)
  * ================================================================== */
 .fi-main-sidebar,
 .fi-sidebar.fi-main-sidebar {
-    background-image: linear-gradient(180deg, #7a2a2a 0%, #5d1d1d 55%, #3b1010 100%);
-    border-right: 1px solid #2c0c0c;
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
+    background-color: #ffffff;
+    background-image: linear-gradient(180deg, #fffdf9 0%, #ffffff 30%, #fffaf2 100%);
+    border-right: 1px solid #f0e2d0;
+    box-shadow: 4px 0 24px -16px rgba(124, 49, 15, 0.18);
 }
 
-/* Branded header (logo block) */
+/* Branded header (logo block) — subtle saffron wash */
 .fi-sidebar-header {
-    background: rgba(0, 0, 0, 0.18);
-    border-bottom: 1px solid rgba(255, 192, 112, 0.16);
+    background: linear-gradient(135deg, #fff3e2 0%, #ffe9cf 100%);
+    border-bottom: 1px solid #f3d9b8;
 }
 .fi-sidebar-header .fi-logo {
-    color: #fff7ea; /* cream */
+    color: #7f310f; /* maroon */
 }
 
-/* Group labels: gold, uppercase */
+/* Group labels: maroon, uppercase, refined */
 .fi-sidebar .fi-sidebar-group-label {
     text-transform: uppercase;
-    font-size: 0.66rem;
-    letter-spacing: 0.1em;
+    font-size: 0.64rem;
+    letter-spacing: 0.12em;
     font-weight: 700;
-    color: #e6b85c; /* gold */
+    color: #c74808; /* saffron-700 */
 }
 .fi-sidebar .fi-sidebar-group-collapse-button,
 .fi-sidebar .fi-sidebar-group-button {
-    color: #e6b85c;
+    color: #9e390e;
+}
+/* Group header reads as a clickable accordion row */
+.fi-sidebar .fi-sidebar-group-button {
+    border-radius: 0.6rem;
+    padding-block: 0.4rem;
+    transition: background-color 0.15s ease;
+}
+.fi-sidebar .fi-sidebar-group-button:hover {
+    background-color: #fff3e2;
+}
+.fi-sidebar .fi-sidebar-group-collapse-button:hover {
+    color: #f06106;
 }
 
 /* Nav items */
@@ -75,33 +88,34 @@
     border-radius: 0.6rem;
     font-weight: 500;
     margin: 1px 0;
+    transition: all 0.15s ease;
 }
 .fi-sidebar .fi-sidebar-item-label {
-    color: #f3e3d2; /* warm cream */
+    color: #4a4a4a; /* neutral dark gray */
 }
 .fi-sidebar .fi-sidebar-item-icon {
-    color: #f0c08a; /* soft saffron */
+    color: #b8843a; /* muted gold/saffron */
 }
-/* Hover — Filament adds a light bg-gray-100; override it with a warm wash */
+/* Hover — warm cream wash + saffron left accent */
 .fi-sidebar .fi-sidebar-item-button:hover,
 .fi-sidebar .fi-sidebar-item-button:focus-visible {
-    background-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: #fff3e2 !important;
     background-image: none;
+    box-shadow: inset 3px 0 0 0 #ffc070;
 }
 .fi-sidebar .fi-sidebar-item-button:hover .fi-sidebar-item-label {
-    color: #ffffff;
+    color: #7f310f;
 }
 .fi-sidebar .fi-sidebar-item-button:hover .fi-sidebar-item-icon {
-    color: #ffd9a8;
+    color: #f06106;
 }
 
-/* Active item — solid saffron pill (opaque, so no gray bleed) with a
-   gold accent bar and white text for clear, legible contrast. */
+/* Active item — solid saffron pill with white text, soft shadow */
 .fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-button,
 .fi-sidebar .fi-sidebar-item-active > .fi-sidebar-item-button {
-    background-color: #c74808 !important; /* saffron-700, opaque */
-    background-image: linear-gradient(135deg, #f06106 0%, #c74808 100%);
-    box-shadow: inset 3px 0 0 0 #f0c674, 0 4px 14px -6px rgba(0, 0, 0, 0.55);
+    background-color: #f06106 !important;
+    background-image: linear-gradient(135deg, #ff7d10 0%, #c74808 100%);
+    box-shadow: 0 6px 16px -6px rgba(199, 72, 8, 0.55);
 }
 .fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label,
 .fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-label {
@@ -115,16 +129,23 @@
 
 /* Sidebar toggle / misc icon buttons inside the sidebar */
 .fi-sidebar .fi-icon-btn {
-    color: #f0c08a;
+    color: #9e390e;
+}
+.fi-sidebar .fi-icon-btn:hover {
+    color: #f06106;
+    background-color: #fff3e2;
 }
 
 /* Slim, themed scrollbar */
 .fi-sidebar-nav::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 .fi-sidebar-nav::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.14);
+    background: #f0ddc6;
     border-radius: 4px;
+}
+.fi-sidebar-nav::-webkit-scrollbar-thumb:hover {
+    background: #e6b85c;
 }
 
 /* ================================================================== *

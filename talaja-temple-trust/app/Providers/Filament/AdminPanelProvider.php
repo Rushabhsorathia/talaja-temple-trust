@@ -31,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->darkMode(false)
             ->brandName('Talaja Temple Trust')
+            ->brandLogo(asset('storage/temple/logo.jpg'))
             ->favicon(asset('favicon.ico'))
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->colors([
@@ -57,24 +58,34 @@ class AdminPanelProvider extends PanelProvider
             ->font('Inter')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
+            // Accordion-style nav: groups are collapsible; the primary
+            // "Donations" group stays open and the rest start collapsed so the
+            // sidebar is compact. Each user's toggle state then persists.
+            ->collapsibleNavigationGroups()
             ->navigationGroups([
                 NavigationGroup::make('Donations')
                     ->icon('heroicon-o-banknotes'),
                 NavigationGroup::make('Finance')
-                    ->icon('heroicon-o-building-library'),
+                    ->icon('heroicon-o-building-library')
+                    ->collapsed(),
                 NavigationGroup::make('Accommodation')
-                    ->icon('heroicon-o-home-modern'),
+                    ->icon('heroicon-o-home-modern')
+                    ->collapsed(),
                 NavigationGroup::make('Shop')
-                    ->icon('heroicon-o-shopping-bag'),
+                    ->icon('heroicon-o-shopping-bag')
+                    ->collapsed(),
                 NavigationGroup::make('Content')
-                    ->icon('heroicon-o-newspaper'),
+                    ->icon('heroicon-o-newspaper')
+                    ->collapsed(),
                 NavigationGroup::make('Communication')
-                    ->icon('heroicon-o-chat-bubble-left-right'),
+                    ->icon('heroicon-o-chat-bubble-left-right')
+                    ->collapsed(),
                 NavigationGroup::make('Configuration')
                     ->icon('heroicon-o-cog-6-tooth')
                     ->collapsed(),
                 NavigationGroup::make('Reports')
-                    ->icon('heroicon-o-chart-bar'),
+                    ->icon('heroicon-o-chart-bar')
+                    ->collapsed(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
