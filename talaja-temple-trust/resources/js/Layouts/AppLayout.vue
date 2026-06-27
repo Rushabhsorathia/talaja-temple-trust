@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue';
-import { Link, usePage } from '@inertiajs/vue3';
-import { HandHeart, MapPin, Phone, Mail } from '@lucide/vue';
+import { Link, router, usePage } from '@inertiajs/vue3';
+import { HandHeart, MapPin, Phone, Mail, User, LogOut, LayoutGrid, CalendarCheck, ShoppingBag, Wallet } from '@lucide/vue';
 
 const props = defineProps({
     locale: { type: String, default: 'en' },
@@ -9,10 +9,13 @@ const props = defineProps({
 
 const nav = computed(() => usePage().props.nav || {});
 const settings = computed(() => usePage().props.siteSettings || {});
+const user = computed(() => usePage().props.auth?.user || null);
+const isDevotee = computed(() => user.value?.type === 'devotee');
 const year = new Date().getFullYear();
 
 const mobileOpen = ref(false);
 const aboutOpen = ref(false);
+const userOpen = ref(false);
 
 const menu = computed(() => [
     { label: nav.value.home || 'Home', href: '/' },
@@ -37,10 +40,15 @@ const menu = computed(() => [
     { label: nav.value.live_darshan || 'Live Darshan', href: '/live-darshan', live: true },
 ]);
 
-const closeAll = () => { mobileOpen.value = false; aboutOpen.value = false; };
+const closeAll = () => { mobileOpen.value = false; aboutOpen.value = false; userOpen.value = false; };
 const onEsc = (e) => { if (e.key === 'Escape') closeAll(); };
 onMounted(() => window.addEventListener('keydown', onEsc));
 onUnmounted(() => window.removeEventListener('keydown', onEsc));
+
+const initials = (name) => (name || '?').split(' ').map(w => w.charAt(0)).join('').slice(0, 2).toUpperCase();
+// Inertia's router sends the X-XSRF-TOKEN header from the cookie automatically,
+// so this works without a csrf-token meta tag (avoids the 419 Page Expired).
+const logout = () => router.post('/logout');
 </script>
 
 <template>
@@ -113,8 +121,39 @@ onUnmounted(() => window.removeEventListener('keydown', onEsc));
                     </template>
                 </ul>
 
-                <!-- Right actions -->
+                 <!-- Right actions -->
                 <div class="flex items-center gap-3">
+                    <!-- Devotee profile dropdown (only for logged-in devotees) -->
+                    <div v-if="isDevotee" class="relative hidden lg:block">
+                        <button @click="userOpen = !userOpen" class="flex items-center gap-2 rounded-full border border-gray-200 py-1 pl-1 pr-3 transition hover:border-saffron-300 hover:bg-saffron-50 focus-visible:ring-2 focus-visible:ring-saffron-500" :aria-expanded="userOpen">
+                            <span class="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-saffron-500 to-saffron-700 text-xs font-bold text-white">{{ initials(user?.name) }}</span>
+                            <span class="max-w-[8rem] truncate text-sm font-medium text-gray-700">{{ user?.name?.split(' ')[0] }}</span>
+                            <svg class="h-4 w-4 text-gray-400 transition" :class="{ 'rotate-180': userOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </button>
+                        <transition enter-active-class="transition duration-150 ease-out" enter-from-class="-translate-y-1 opacity-0" enter-to-class="translate-y-0 opacity-100" leave-active-class="transition duration-100 ease-in" leave-from-class="translate-y-0 opacity-100" leave-to-class="-translate-y-1 opacity-0">
+                            <div v-if="userOpen" class="absolute right-0 top-full z-50 mt-2 w-60 rounded-2xl border border-gray-100 bg-white py-2 shadow-xl">
+                                <div class="border-b border-gray-100 px-4 pb-3 pt-1">
+                                    <p class="truncate font-serif text-sm font-semibold text-maroon-900">{{ user?.name }}</p>
+                                    <p class="truncate text-xs text-gray-400">{{ user?.email }}</p>
+                                </div>
+                                <Link href="/dashboard" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition hover:bg-saffron-50 hover:text-saffron-700" @click="userOpen=false"><LayoutGrid :size="16" /> My Account</Link>
+                                <Link href="/profile" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition hover:bg-saffron-50 hover:text-saffron-700" @click="userOpen=false"><User :size="16" /> Edit Profile</Link>
+                                <div class="my-1 border-t border-gray-100"></div>
+                                <Link href="/donate/my" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition hover:bg-saffron-50 hover:text-saffron-700" @click="userOpen=false"><Wallet :size="16" /> My Donations</Link>
+                                <Link href="/bookings/my" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition hover:bg-saffron-50 hover:text-saffron-700" @click="userOpen=false"><CalendarCheck :size="16" /> My Bookings</Link>
+                                <Link href="/shop/orders" class="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 transition hover:bg-saffron-50 hover:text-saffron-700" @click="userOpen=false"><ShoppingBag :size="16" /> My Orders</Link>
+                                <div class="my-1 border-t border-gray-100"></div>
+                                <button @click="logout" class="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-600 transition hover:bg-red-50"><LogOut :size="16" /> Logout</button>
+                            </div>
+                        </transition>
+                    </div>
+
+                    <!-- Login link when logged out -->
+                    <Link v-else href="/otp/login" class="hidden items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 transition hover:border-saffron-300 hover:bg-saffron-50 hover:text-saffron-700 sm:inline-flex">
+                        <User :size="16" :stroke-width="2" />
+                        Login
+                    </Link>
+
                     <Link href="/donate" class="hidden items-center gap-2 rounded-full bg-saffron-500 px-5 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-saffron-600 transition hover:bg-saffron-600 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500 focus-visible:ring-offset-2 sm:inline-flex">
                         <HandHeart :size="16" :stroke-width="2" />
                         Donate
@@ -158,6 +197,22 @@ onUnmounted(() => window.removeEventListener('keydown', onEsc));
                                 </transition>
                             </li>
                         </template>
+                        <!-- Mobile: logged-in devotee profile links -->
+                        <li v-if="isDevotee" class="mt-2 space-y-1 border-t border-gray-100 pt-3">
+                            <p class="px-3 pb-1 text-xs font-semibold uppercase tracking-wide text-gray-400">Hi, {{ user?.name?.split(' ')[0] }}</p>
+                            <li><Link href="/dashboard" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-saffron-50" @click="closeAll">My Account</Link></li>
+                            <li><Link href="/profile" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-saffron-50" @click="closeAll">Edit Profile</Link></li>
+                            <li><Link href="/donate/my" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-saffron-50" @click="closeAll">My Donations</Link></li>
+                            <li><Link href="/bookings/my" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-saffron-50" @click="closeAll">My Bookings</Link></li>
+                            <li><Link href="/shop/orders" class="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-saffron-50" @click="closeAll">My Orders</Link></li>
+                            <li><button @click="logout" class="block w-full rounded-lg px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50">Logout</button></li>
+                        </li>
+                        <li v-else class="pt-2">
+                            <Link href="/otp/login" class="flex items-center justify-center gap-2 rounded-full border border-gray-200 px-5 py-2.5 text-sm font-semibold text-gray-700" @click="closeAll">
+                                <User :size="16" :stroke-width="2" />
+                                Login / Register
+                            </Link>
+                        </li>
                         <li class="pt-2">
                             <Link href="/donate" class="flex items-center justify-center gap-2 rounded-full bg-saffron-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm" @click="closeAll">
                                 <HandHeart :size="16" :stroke-width="2" />
