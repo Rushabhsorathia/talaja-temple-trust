@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { Video, HandHeart, Bed, ShoppingBag } from '@lucide/vue';
 
 const props = defineProps({
     banners: { type: Array, default: () => [] },
@@ -27,10 +28,10 @@ onMounted(() => { reset(); });
 onUnmounted(() => clearInterval(interval));
 
 const services = [
-    { icon: '🛕', title: 'Live Darshan', desc: 'Experience divine darshan from anywhere in the world.', href: '/live-darshan', live: true },
-    { icon: '🤲', title: 'Donate', desc: 'Support the temple with secure online donations (80G eligible).', href: '/donate' },
-    { icon: '🛏️', title: 'Bookings', desc: 'Reserve rooms & halls for your stay and events.', href: '/bookings' },
-    { icon: '🛍️', title: 'Shop', desc: 'Prasad, books and souvenirs delivered to your home.', href: '/shop' },
+    { icon: Video, title: 'Live Darshan', desc: 'Experience divine darshan from anywhere in the world.', href: '/live-darshan', live: true },
+    { icon: HandHeart, title: 'Donate', desc: 'Support the temple with secure online donations (80G eligible).', href: '/donate' },
+    { icon: Bed, title: 'Bookings', desc: 'Reserve rooms & halls for your stay and events.', href: '/bookings' },
+    { icon: ShoppingBag, title: 'Shop', desc: 'Prasad, books and souvenirs delivered to your home.', href: '/shop' },
 ];
 
 const stats = [
@@ -119,7 +120,9 @@ const stats = [
                 </div>
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <a v-for="svc in services" :key="svc.title" :href="svc.href" class="group rounded-2xl border border-saffron-100 bg-white p-8 text-center shadow-md transition hover:-translate-y-2 hover:shadow-2xl">
-                        <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-saffron-100 to-saffron-200 text-3xl transition group-hover:scale-110">{{ svc.icon }}</div>
+                        <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-saffron-100 to-saffron-200 text-saffron-700 transition group-hover:scale-110">
+                            <component :is="svc.icon" :size="32" :stroke-width="1.75" />
+                        </div>
                         <h3 class="mb-2 font-serif text-xl font-semibold text-maroon-900">{{ svc.title }}</h3>
                         <p class="text-sm text-gray-500">{{ svc.desc }}</p>
                         <span class="mt-4 inline-block text-sm font-medium text-saffron-600 transition group-hover:underline">Learn more →</span>

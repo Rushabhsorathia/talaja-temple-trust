@@ -2,10 +2,11 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PageHero from '@/Components/PageHero.vue';
 import { Head } from '@inertiajs/vue3';
+import { Lamp, Flame, HandHeart, CircleDot, PartyPopper } from '@lucide/vue';
 
 defineProps({ temple: Object, timings: Object, festivals: Array, locale: String });
 
-const typeIcons = { darshan: '🪔', aarti: '🔥', pooja: '🙏' };
+const typeIcons = { darshan: Lamp, aarti: Flame, pooja: HandHeart };
 </script>
 
 <template>
@@ -21,7 +22,9 @@ const typeIcons = { darshan: '🪔', aarti: '🔥', pooja: '🙏' };
                 <div class="grid gap-6 text-left md:grid-cols-3">
                     <div v-for="(items, type) in timings" :key="type" class="overflow-hidden rounded-2xl border border-saffron-100 bg-white shadow-md">
                         <div class="flex items-center gap-2 bg-gradient-to-r from-saffron-500 to-saffron-700 px-5 py-3 text-white">
-                            <span class="text-xl">{{ typeIcons[type] || '📿' }}</span>
+                            <span class="text-xl">
+                                <component :is="typeIcons[type] || CircleDot" :size="20" :stroke-width="2" />
+                            </span>
                             <h3 class="font-serif text-lg font-semibold capitalize">{{ type }}</h3>
                         </div>
                         <table class="w-full text-sm">
@@ -44,7 +47,9 @@ const typeIcons = { darshan: '🪔', aarti: '🔥', pooja: '🙏' };
                     <div v-for="f in festivals" :key="f.title" class="group overflow-hidden rounded-2xl border border-saffron-100 bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
                         <div class="aspect-video overflow-hidden bg-saffron-100">
                             <img v-if="f.image_path" :src="`/storage/${f.image_path}`" :alt="f.title" class="h-full w-full object-cover transition duration-500 group-hover:scale-110" />
-                            <div v-else class="flex h-full items-center justify-center bg-gradient-to-br from-saffron-200 to-saffron-400 text-4xl">🎉</div>
+                            <div v-else class="flex h-full items-center justify-center bg-gradient-to-br from-saffron-200 to-saffron-400 text-white">
+                                <PartyPopper :size="40" :stroke-width="1.75" />
+                            </div>
                         </div>
                         <div class="p-5">
                             <p class="text-xs font-semibold text-saffron-600">{{ f.start_date }}{{ f.end_date ? ' → ' + f.end_date : '' }}</p>

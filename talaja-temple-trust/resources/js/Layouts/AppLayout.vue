@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import { HandHeart, MapPin, Phone, Mail } from '@lucide/vue';
 
 const props = defineProps({
     locale: { type: String, default: 'en' },
@@ -103,8 +104,9 @@ onUnmounted(() => window.removeEventListener('keydown', onEsc));
 
                 <!-- Right actions -->
                 <div class="flex items-center gap-2">
-                    <Link href="/donate" class="hidden rounded-full bg-gradient-to-r from-saffron-500 to-saffron-700 px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-110 sm:inline-flex">
-                        🤲 Donate
+                    <Link href="/donate" class="hidden items-center gap-2 rounded-full bg-gradient-to-r from-saffron-500 to-saffron-700 px-5 py-2 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-110 sm:inline-flex">
+                        <HandHeart :size="16" :stroke-width="2" />
+                        Donate
                     </Link>
                     <!-- Hamburger -->
                     <button @click="mobileOpen = !mobileOpen" class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-maroon-900 hover:bg-saffron-50 lg:hidden" aria-label="Toggle menu" :aria-expanded="mobileOpen">
@@ -143,7 +145,10 @@ onUnmounted(() => window.removeEventListener('keydown', onEsc));
                             </li>
                         </template>
                         <li class="pt-2">
-                            <Link href="/donate" class="flex justify-center rounded-full bg-gradient-to-r from-saffron-500 to-saffron-700 px-5 py-2.5 text-sm font-semibold text-white shadow-md" @click="closeAll">🤲 Donate</Link>
+                            <Link href="/donate" class="flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-saffron-500 to-saffron-700 px-5 py-2.5 text-sm font-semibold text-white shadow-md" @click="closeAll">
+                                <HandHeart :size="16" :stroke-width="2" />
+                                Donate
+                            </Link>
                         </li>
                         <li class="flex items-center justify-center gap-4 pt-2 text-xs">
                             <Link href="/change-language/en" :class="{ 'font-bold text-saffron-700': locale === 'en' }">English</Link>
@@ -168,7 +173,10 @@ onUnmounted(() => window.removeEventListener('keydown', onEsc));
                         <img src="/storage/temple/logo.jpg" alt="Logo" class="h-12 w-12 rounded-full object-cover ring-2 ring-saffron-400/40" />
                         <p class="font-serif text-lg font-bold text-saffron-300">{{ settings.name }}</p>
                     </div>
-                    <p class="text-sm leading-relaxed text-cream/60" v-html="settings.address"></p>
+                    <div class="flex items-start gap-2 text-sm leading-relaxed text-cream/60">
+                        <MapPin :size="16" :stroke-width="2" class="mt-0.5 shrink-0 text-saffron-400" />
+                        <span v-html="settings.address"></span>
+                    </div>
                 </div>
                 <div>
                     <h3 class="mb-4 font-serif text-base font-semibold text-saffron-300">Information</h3>
@@ -192,12 +200,34 @@ onUnmounted(() => window.removeEventListener('keydown', onEsc));
                 </div>
                 <div>
                     <h3 class="mb-4 font-serif text-base font-semibold text-saffron-300">Reach Us</h3>
-                    <p class="text-sm text-cream/60">{{ settings.phone }}</p>
-                    <p class="text-sm text-cream/60">{{ settings.email }}</p>
-                    <div class="mt-4 flex gap-3">
-                        <a href="#" aria-label="YouTube" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-saffron-600">▶</a>
-                        <a href="#" aria-label="Instagram" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-saffron-600">◉</a>
-                        <a href="#" aria-label="Facebook" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 hover:bg-saffron-600">f</a>
+                    <div class="space-y-2 text-sm text-cream/60">
+                        <p class="flex items-center gap-2">
+                            <Phone :size="14" :stroke-width="2" class="shrink-0 text-saffron-400" />
+                            <a :href="`tel:${settings.phone}`" class="hover:text-saffron-300">{{ settings.phone }}</a>
+                        </p>
+                        <p class="flex items-center gap-2">
+                            <Mail :size="14" :stroke-width="2" class="shrink-0 text-saffron-400" />
+                            <a :href="`mailto:${settings.email}`" class="hover:text-saffron-300">{{ settings.email }}</a>
+                        </p>
+                    </div>
+                    <div class="mt-5 flex gap-3">
+                        <a href="#" aria-label="YouTube" class="group flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-cream group-hover:text-white">
+                                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram" class="group flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 text-cream group-hover:text-white">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="group flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4 text-cream group-hover:text-white">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>

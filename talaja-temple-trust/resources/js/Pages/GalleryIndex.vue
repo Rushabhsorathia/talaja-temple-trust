@@ -2,6 +2,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PageHero from '@/Components/PageHero.vue';
 import { Head } from '@inertiajs/vue3';
+import { Camera, Video } from '@lucide/vue';
 defineProps({ locale: String });
 </script>
 <template>
@@ -13,13 +14,19 @@ defineProps({ locale: String });
                 <a href="/photo-gallery" class="group relative overflow-hidden rounded-2xl shadow-xl">
                     <img src="/storage/gallery/g-02.jpg" alt="Photos" class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-110" />
                     <div class="absolute inset-0 flex items-end bg-gradient-to-t from-maroon-950/80 to-transparent p-6">
-                        <h3 class="font-serif text-2xl font-bold text-white">📷 Photo Gallery</h3>
+                        <h3 class="flex items-center gap-3 font-serif text-2xl font-bold text-white">
+                            <Camera :size="28" :stroke-width="2" />
+                            Photo Gallery
+                        </h3>
                     </div>
                 </a>
                 <a href="/video-gallery" class="group relative overflow-hidden rounded-2xl shadow-xl">
                     <img src="/storage/gallery/g-05.jpg" alt="Videos" class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-110" />
                     <div class="absolute inset-0 flex items-end bg-gradient-to-t from-maroon-950/80 to-transparent p-6">
-                        <h3 class="font-serif text-2xl font-bold text-white">🎥 Video Gallery</h3>
+                        <h3 class="flex items-center gap-3 font-serif text-2xl font-bold text-white">
+                            <Video :size="28" :stroke-width="2" />
+                            Video Gallery
+                        </h3>
                     </div>
                 </a>
             </div>
