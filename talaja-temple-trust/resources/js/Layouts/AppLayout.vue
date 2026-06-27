@@ -13,6 +13,7 @@ const year = new Date().getFullYear();
 
 <template>
     <div class="flex min-h-screen flex-col bg-cream">
+        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-saffron-600 focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
         <!-- Utility bar -->
         <div class="bg-maroon-900 text-cream">
             <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-1.5 text-xs">
@@ -55,7 +56,7 @@ const year = new Date().getFullYear();
         </header>
 
         <!-- Page content -->
-        <main class="flex-1">
+        <main id="main-content" class="flex-1">
             <slot />
         </main>
 
