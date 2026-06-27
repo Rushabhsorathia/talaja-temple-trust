@@ -17,9 +17,9 @@ defineProps({ trustees: Array, locale: String });
                     <div class="relative aspect-[4/3] overflow-hidden bg-saffron-100">
                         <img v-if="t.photo_path" :src="`/storage/${t.photo_path}`" :alt="t.name" class="h-full w-full object-cover" />
                         <div v-else class="flex h-full w-full items-center justify-center bg-gradient-to-br from-saffron-200 to-saffron-400 text-5xl font-bold text-white">{{ t.name?.charAt(0) }}</div>
-                        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-maroon-950/80 to-transparent p-4">
+                        <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-4">
                             <h3 class="font-serif text-xl font-bold text-white">{{ t.name }}</h3>
-                            <p class="text-sm text-saffron-300">{{ t.designation }}</p>
+                            <p class="text-sm text-white/80">{{ t.designation }}</p>
                         </div>
                     </div>
                     <p class="p-5 text-sm leading-relaxed text-gray-600" v-if="t.bio">{{ t.bio }}</p>

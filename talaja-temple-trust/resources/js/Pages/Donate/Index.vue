@@ -26,7 +26,7 @@ const submit = () => form.post('/donate', { preserveScroll: true });
         <Head><title>Donate</title></Head>
         <section class="bg-temple-gradient py-16 text-center text-white">
             <h1 class="font-serif text-4xl font-bold">Support the Temple</h1>
-            <p class="mt-2 text-cream/90">Your contribution fuels devotion and service.</p>
+            <p class="mt-2 text-white/90">Your contribution fuels devotion and service.</p>
         </section>
 
         <section class="mx-auto max-w-3xl px-4 py-12">

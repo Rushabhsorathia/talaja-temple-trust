@@ -10,19 +10,19 @@ defineProps({ streamUrl: String, isLive: Boolean, locale: String });
         <Head><title>Live Darshan</title></Head>
         <PageHero title="Live Darshan" subtitle="Experience the divine presence from anywhere in the world" image="/storage/hero/temple-1.jpg" breadcrumb="Home · Live Darshan" />
 
-        <!-- Stream -->
-        <section class="bg-maroon-950 py-10">
+        <!-- Stream — clean white section -->
+        <section class="bg-white py-10">
             <div class="mx-auto max-w-5xl px-4">
-                <div class="relative overflow-hidden rounded-2xl shadow-2xl">
-                    <div class="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full bg-red-600 px-3 py-1 text-xs font-bold text-white shadow-lg">
+                <div class="relative overflow-hidden rounded-2xl shadow-lg ring-1 ring-gray-200">
+                    <div class="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white shadow-lg">
                         <span class="h-2 w-2 animate-pulse rounded-full bg-white"></span>
                         {{ isLive ? 'LIVE NOW' : 'OFFLINE' }}
                     </div>
                     <iframe v-if="streamUrl" :src="streamUrl" class="aspect-video w-full" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    <div v-else class="flex aspect-video items-center justify-center bg-gradient-to-br from-saffron-700 to-maroon-900 text-center text-white">
+                    <div v-else class="flex aspect-video items-center justify-center bg-gradient-to-br from-saffron-50 to-saffron-100 text-center">
                         <div>
-                            <p class="font-serif text-2xl text-saffron-300">|| Jay Mataji ||</p>
-                            <p class="mt-2 text-cream/80">Live streaming is currently offline.</p>
+                            <p class="font-serif text-2xl text-saffron-600">|| Jay Mataji ||</p>
+                            <p class="mt-2 text-gray-500">Live streaming is currently offline.</p>
                         </div>
                     </div>
                 </div>

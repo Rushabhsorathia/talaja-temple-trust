@@ -21,7 +21,7 @@ defineProps({ news: Object, related: Array, locale: String });
                     <div class="mx-auto max-w-3xl">
                         <div class="mb-3 flex items-center gap-2 text-xs">
                             <span class="rounded-full bg-saffron-600 px-2.5 py-0.5 font-semibold capitalize text-white">{{ news.category }}</span>
-                            <span class="text-cream/80">{{ news.published_at }}</span>
+                            <span class="text-gray-400">{{ news.published_at }}</span>
                         </div>
                         <h1 class="font-serif text-2xl font-bold text-white drop-shadow-lg md:text-4xl">{{ news.title }}</h1>
                     </div>

@@ -21,8 +21,8 @@ const submit = () => form.post('/contact-us', { preserveScroll: true, onSuccess:
 <template>
     <AppLayout :locale="locale">
         <Head><title>Contact Us</title></Head>
-        <section class="bg-temple-gradient py-20 text-center text-white">
-            <h1 class="font-serif text-4xl font-bold">Contact Us</h1>
+        <section class="bg-gradient-to-b from-saffron-50 to-white py-20 text-center">
+            <h1 class="font-serif text-4xl font-bold text-maroon-900">Contact Us</h1>
         </section>
         <section class="mx-auto grid max-w-5xl gap-10 px-4 py-16 md:grid-cols-2">
             <div>

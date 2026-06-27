@@ -43,10 +43,10 @@ const facilities = [
         </section>
 
         <!-- Booking CTA -->
-        <section class="bg-gradient-to-r from-maroon-900 to-maroon-950 py-14">
-            <div class="mx-auto flex max-w-4xl flex-col items-center px-4 text-center text-white">
+        <section class="bg-gradient-to-r from-cream-100 to-cream-200 py-14">
+            <div class="mx-auto flex max-w-4xl flex-col items-center px-4 text-center text-maroon-900">
                 <h2 class="mb-3 font-serif text-3xl font-bold">Plan Your Visit</h2>
-                <p class="mb-8 text-cream/80">Book your accommodation or event hall in advance for a comfortable stay.</p>
+                <p class="mb-8 text-gray-700">Book your accommodation or event hall in advance for a comfortable stay.</p>
                 <a href="/bookings" class="rounded-full bg-saffron-600 px-8 py-3.5 font-semibold text-white shadow-xl transition hover:scale-105">Book Now</a>
             </div>
         </section>
