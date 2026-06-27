@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { Phone, Mail } from '@lucide/vue';
 
 defineProps({ temple: Object, locale: String, flash: Object });
 
@@ -27,8 +28,8 @@ const submit = () => form.post('/contact-us', { preserveScroll: true, onSuccess:
             <div>
                 <h2 class="mb-4 font-serif text-2xl text-maroon-900">Reach Us</h2>
                 <p class="text-gray-600" v-html="temple?.address || ''"></p>
-                <p class="mt-2 text-gray-600" v-if="temple?.phone">📞 {{ temple.phone }}</p>
-                <p class="text-gray-600" v-if="temple?.email">✉️ {{ temple.email }}</p>
+                <p class="mt-2 flex items-center gap-2 text-gray-600" v-if="temple?.phone"><Phone class="h-4 w-4 text-saffron-600" /> {{ temple.phone }}</p>
+                <p class="flex items-center gap-2 text-gray-600" v-if="temple?.email"><Mail class="h-4 w-4 text-saffron-600" /> {{ temple.email }}</p>
                 <iframe v-if="temple?.map_embed" :src="temple.map_embed" class="mt-4 h-56 w-full rounded-xl border-0" loading="lazy"></iframe>
             </div>
             <div class="card-temple">

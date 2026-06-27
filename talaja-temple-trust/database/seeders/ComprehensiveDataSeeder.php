@@ -126,10 +126,11 @@ class ComprehensiveDataSeeder extends Seeder
         ];
         foreach ($newsItems as $i => $n) {
             News::create([
-                'title' => $n[0], 'title_gu' => $n[0], 'slug' => Str::slug($n[0]),
+                'title' => $n[0], 'title_gu' => $n[0], 'slug' => Str::slug($n[0]).'-'.$i,
                 'excerpt' => '<p>'.Str::limit($n[2], 140).'</p>',
                 'content' => '<p>'.$n[2].'</p><p>For more details and photographs, please visit the temple office or contact us through the official website.</p>',
                 'category' => $n[1], 'is_published' => true,
+                'image_path' => "news/news-".($i + 1).".jpg",
                 'published_at' => now()->subDays($i * 4 + 2),
             ]);
         }
@@ -143,14 +144,14 @@ class ComprehensiveDataSeeder extends Seeder
             CmsPage::create(['slug' => $p[0], 'title' => $p[1], 'content' => $p[2], 'is_published' => true, 'sort_order' => 0]);
         }
 
-        Banner::create(['title' => 'Welcome to Talaja Temple', 'image_path' => 'banners/hero-1.jpg', 'is_active' => true, 'sort_order' => 0]);
-        Banner::create(['title' => 'Jay Mataji', 'image_path' => 'banners/hero-2.jpg', 'is_active' => true, 'sort_order' => 1]);
+        Banner::create(['title' => 'Welcome to Talaja Temple', 'image_path' => 'hero/temple-1.jpg', 'is_active' => true, 'sort_order' => 0]);
+        Banner::create(['title' => 'Jay Mataji', 'image_path' => 'hero/temple-2.jpg', 'is_active' => true, 'sort_order' => 1]);
 
         $galleryCats = ['Temple', 'Festivals', 'Events', 'Community'];
-        for ($i = 1; $i <= 16; $i++) {
+        for ($i = 1; $i <= 12; $i++) {
             Gallery::create([
                 'title' => 'Photo '.$i, 'category' => $galleryCats[$i % 4],
-                'image_path' => "gallery/photo-{$i}.jpg", 'alt_text' => 'Temple photograph',
+                'image_path' => sprintf("gallery/g-%02d.jpg", $i), 'alt_text' => 'Temple photograph',
                 'is_active' => true, 'sort_order' => $i,
             ]);
         }

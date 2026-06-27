@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { TriangleAlert } from '@lucide/vue';
 
 defineProps({ categories: Array, slabs: Array, razorpayKey: String, configured: Boolean, locale: String, flash: Object });
 
@@ -30,7 +31,7 @@ const submit = () => form.post('/donate', { preserveScroll: true });
 
         <section class="mx-auto max-w-3xl px-4 py-12">
             <div v-if="flash?.error" class="mb-4 rounded-lg bg-red-50 p-3 text-red-700">{{ flash.error }}</div>
-            <div v-if="!configured" class="mb-4 rounded-lg bg-amber-50 p-3 text-amber-700 text-sm">⚠ Payment gateway is in sandbox/off mode. Donations will be simulated.</div>
+            <div v-if="!configured" class="mb-4 flex items-center gap-2 rounded-lg bg-amber-50 p-3 text-amber-700 text-sm"><TriangleAlert class="h-4 w-4 shrink-0" /> Payment gateway is in sandbox/off mode. Donations will be simulated.</div>
 
             <form @submit.prevent="submit" class="card-temple space-y-5">
                 <div>
