@@ -26,7 +26,7 @@ class Temple extends Model implements HasMedia
         return $this->hasMany(TempleTranslation::class);
     }
 
-    public function translation(string $locale = null): HasOne
+    public function translation(?string $locale = null): HasOne
     {
         return $this->hasOne(TempleTranslation::class)->where('locale', $locale ?? app()->getLocale());
     }
