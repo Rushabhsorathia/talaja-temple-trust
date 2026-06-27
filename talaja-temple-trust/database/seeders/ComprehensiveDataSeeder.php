@@ -278,19 +278,23 @@ class ComprehensiveDataSeeder extends Seeder
 
     protected function seedUsers(): void
     {
-        // Devotees (some will be referenced by donations/bookings)
+        // Deterministic devotee accounts so login credentials stay stable
+        // across reseeds (see docs/LOGIN_DETAILS.md). Names are paired by index
+        // rather than random to guarantee uniqueness & predictable emails.
         for ($i = 0; $i < 40; $i++) {
-            $name = $this->firstNames[array_rand($this->firstNames)].' '.$this->lastNames[array_rand($this->lastNames)];
+            $first = $this->firstNames[$i % count($this->firstNames)];
+            $last = $this->lastNames[$i % count($this->lastNames)];
+            $name = $first.' '.$last;
             User::create([
                 'name' => $name,
                 'email' => Str::slug($name).$i.'@example.com',
-                'mobile' => '9'.mt_rand(600000000, 999999999),
+                'mobile' => '9'.(600000000 + ($i * 1234567) % 399999999),
                 'password' => bcrypt('password'),
                 'type' => 'devotee',
                 'is_active' => true,
                 'mobile_verified_at' => now(),
                 'pan' => $i % 3 === 0 ? strtoupper(Str::random(5)).'1234'.strtoupper(Str::random(1)) : null,
-                'address' => $this->cities[array_rand($this->cities)].', Gujarat',
+                'address' => $this->cities[$i % count($this->cities)].', Gujarat',
             ]);
         }
     }

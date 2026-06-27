@@ -12,6 +12,10 @@ class DonationChart extends ChartWidget
 
     protected static ?string $maxHeight = '300px';
 
+    protected static ?int $sort = 2;
+
+    protected int|string|array $columnSpan = 'full';
+
     protected function getData(): array
     {
         $days = collect(range(13, 0))->map(fn ($d) => Carbon::today()->subDays($d));

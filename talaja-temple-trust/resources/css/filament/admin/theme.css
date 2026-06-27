@@ -1,0 +1,133 @@
+/* ------------------------------------------------------------------ *
+ * Talaja Temple Trust — Admin theme
+ * Brand: saffron (primary) + maroon accents, warm cream surfaces,
+ * Cinzel serif for headings/brand, Inter for body.
+ * (Font import must precede all other statements.)
+ * ------------------------------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap');
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+:root {
+    --tt-serif: 'Cinzel', ui-serif, Georgia, serif;
+}
+
+/* Warm, cream-tinted app background instead of flat white/zinc */
+.fi-body {
+    background-color: #fffdf8;
+}
+
+/* --- Brand / headings use the temple serif ------------------------ */
+.fi-logo,
+.fi-topbar .fi-logo,
+.fi-header-heading,
+.fi-section-header-heading,
+.fi-modal-heading,
+.fi-fo-wizard-header-step-label,
+.fi-wi-stats-overview-stat-value {
+    font-family: var(--tt-serif);
+    letter-spacing: 0.01em;
+}
+
+.fi-logo {
+    font-weight: 700;
+    color: #7f310f; /* maroon-900 */
+}
+
+/* --- Sidebar: softer, rounded, saffron active state --------------- */
+.fi-sidebar {
+    --tt-sidebar-bg: #fffaf2; /* cream */
+}
+.fi-sidebar.fi-main-sidebar {
+    background-color: var(--tt-sidebar-bg);
+    border-right: 1px solid #f3e6d2;
+}
+.fi-sidebar-group-label {
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: #c74808; /* saffron-700 */
+}
+.fi-sidebar-item-button {
+    border-radius: 0.6rem;
+    font-weight: 500;
+}
+.fi-sidebar-item-button:hover {
+    background-color: #ffefd4; /* saffron-100 */
+}
+.fi-sidebar-item.fi-active .fi-sidebar-item-button,
+.fi-sidebar-item-active .fi-sidebar-item-button {
+    background-color: #ffefd4;
+    color: #9c2d2d; /* maroon-700 */
+    box-shadow: inset 3px 0 0 0 #f06106; /* saffron accent bar */
+}
+
+/* --- Topbar ------------------------------------------------------- */
+.fi-topbar nav {
+    background-color: #ffffff;
+    border-bottom: 1px solid #f3e6d2;
+}
+
+/* --- Cards / sections / widgets: rounder, warmer borders ---------- */
+.fi-section,
+.fi-wi-stats-overview-stat,
+.fi-ta-ctn,
+.fi-modal-window,
+.fi-dropdown-panel,
+.fi-fo-field-wrp .fi-input-wrp {
+    border-radius: 0.9rem;
+}
+.fi-section,
+.fi-ta-ctn {
+    border: 1px solid #f1e4d4;
+    box-shadow: 0 10px 30px -18px rgba(199, 72, 8, 0.35);
+}
+
+/* Stats cards get a subtle saffron top accent */
+.fi-wi-stats-overview-stat {
+    border: 1px solid #f1e4d4;
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(135deg, #ff7d10, #c74808) border-box;
+    border-top: 3px solid transparent;
+}
+
+/* --- Primary buttons: temple gradient ----------------------------- */
+.fi-btn.fi-color-primary,
+.fi-ac-btn-action.fi-color-primary > .fi-btn {
+    background-image: linear-gradient(135deg, #ff7d10 0%, #c74808 100%);
+    border: none;
+}
+
+/* --- Tables: warm header, comfortable rows ------------------------ */
+.fi-ta-header-cell {
+    background-color: #fff8ed; /* saffron-50 */
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+}
+.fi-ta-row:hover {
+    background-color: #fffaf2;
+}
+
+/* --- Login & full-page (auth) screens: temple gradient ----------- */
+.fi-simple-layout {
+    background:
+        radial-gradient(1200px 500px at 50% -10%, rgba(255, 125, 16, 0.18), transparent 60%),
+        linear-gradient(160deg, #fffaf2 0%, #fff1de 45%, #ffe3c2 100%);
+}
+.fi-simple-main {
+    border: 1px solid #f3e0c4;
+    border-radius: 1.1rem;
+    box-shadow: 0 24px 60px -24px rgba(124, 49, 15, 0.4);
+}
+.fi-simple-header .fi-logo {
+    justify-content: center;
+}
+
+/* --- Section header icons inherit saffron ------------------------- */
+.fi-section-header-icon {
+    color: #f06106;
+}

@@ -11,6 +11,8 @@ class RecentDonations extends BaseWidget
 {
     protected static ?string $heading = 'Recent Donations';
 
+    protected static ?int $sort = 3;
+
     protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
