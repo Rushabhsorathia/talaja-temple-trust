@@ -32,42 +32,98 @@
 
 .fi-logo {
     font-weight: 700;
-    color: #7f310f; /* maroon-900 */
+}
+/* Login screen sits on a cream background → keep the brand maroon there */
+.fi-simple-header .fi-logo {
+    color: #7f310f;
 }
 
-/* --- Sidebar: softer, rounded, saffron active state --------------- */
-.fi-sidebar {
-    --tt-sidebar-bg: #fffaf2; /* cream */
-}
+/* ================================================================== *
+ * SIDEBAR — rich maroon with cream/gold text and a gold active state
+ * ================================================================== */
+.fi-main-sidebar,
 .fi-sidebar.fi-main-sidebar {
-    background-color: var(--tt-sidebar-bg);
-    border-right: 1px solid #f3e6d2;
+    background-image: linear-gradient(180deg, #7a2a2a 0%, #5d1d1d 55%, #3b1010 100%);
+    border-right: 1px solid #2c0c0c;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
 }
-.fi-sidebar-group-label {
+
+/* Branded header (logo block) */
+.fi-sidebar-header {
+    background: rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(255, 192, 112, 0.16);
+}
+.fi-sidebar-header .fi-logo {
+    color: #fff7ea; /* cream */
+}
+
+/* Group labels: gold, uppercase */
+.fi-sidebar .fi-sidebar-group-label {
     text-transform: uppercase;
-    font-size: 0.68rem;
-    letter-spacing: 0.08em;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
     font-weight: 700;
-    color: #c74808; /* saffron-700 */
+    color: #e6b85c; /* gold */
 }
-.fi-sidebar-item-button {
+.fi-sidebar .fi-sidebar-group-collapse-button,
+.fi-sidebar .fi-sidebar-group-button {
+    color: #e6b85c;
+}
+
+/* Nav items */
+.fi-sidebar .fi-sidebar-item-button {
     border-radius: 0.6rem;
     font-weight: 500;
+    margin: 1px 0;
 }
-.fi-sidebar-item-button:hover {
-    background-color: #ffefd4; /* saffron-100 */
+.fi-sidebar .fi-sidebar-item-label {
+    color: #f3e3d2; /* warm cream */
 }
-.fi-sidebar-item.fi-active .fi-sidebar-item-button,
-.fi-sidebar-item-active .fi-sidebar-item-button {
-    background-color: #ffefd4;
-    color: #9c2d2d; /* maroon-700 */
-    box-shadow: inset 3px 0 0 0 #f06106; /* saffron accent bar */
+.fi-sidebar .fi-sidebar-item-icon {
+    color: #f0c08a; /* soft saffron */
+}
+.fi-sidebar .fi-sidebar-item-button:hover {
+    background-color: rgba(255, 255, 255, 0.07);
+}
+.fi-sidebar .fi-sidebar-item-button:hover .fi-sidebar-item-label {
+    color: #ffffff;
+}
+.fi-sidebar .fi-sidebar-item-button:hover .fi-sidebar-item-icon {
+    color: #ffd9a8;
 }
 
-/* --- Topbar ------------------------------------------------------- */
+/* Active item — gold highlight + accent bar */
+.fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-button {
+    background-image: linear-gradient(90deg, rgba(201, 162, 39, 0.32), rgba(201, 162, 39, 0.05));
+    box-shadow: inset 3px 0 0 0 #e6b85c;
+}
+.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label {
+    color: #fff3d6;
+    font-weight: 600;
+}
+.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-icon {
+    color: #f4cd6a; /* gold */
+}
+
+/* Sidebar toggle / misc icon buttons inside the sidebar */
+.fi-sidebar .fi-icon-btn {
+    color: #f0c08a;
+}
+
+/* Slim, themed scrollbar */
+.fi-sidebar-nav::-webkit-scrollbar {
+    width: 8px;
+}
+.fi-sidebar-nav::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 4px;
+}
+
+/* --- Topbar (stays light, maroon text) ---------------------------- */
 .fi-topbar nav {
     background-color: #ffffff;
-    border-bottom: 1px solid #f3e6d2;
+    border-bottom: 1px solid #f0ddc6;
+    box-shadow: 0 1px 0 rgba(124, 49, 15, 0.04);
 }
 
 /* --- Cards / sections / widgets: rounder, warmer borders ---------- */
