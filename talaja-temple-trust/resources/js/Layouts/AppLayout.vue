@@ -55,11 +55,15 @@ const menu = computed(() => [
 
 const isActive = (href) => {
     if (!href) return false;
-    const path = currentUrl.value.split('?')[0];
+    const url = currentUrl.value || '/';
+    const path = String(url).split('?')[0];
     return path === href || (href !== '/' && path.startsWith(href));
 };
 
-const initials = (name) => (name || '?').split(' ').map((w) => w.charAt(0)).join('').slice(0, 2).toUpperCase();
+const initials = (name) => {
+    const n = typeof name === 'string' && name.trim() ? name : '?';
+    return n.split(' ').map((w) => w.charAt(0) || '').join('').slice(0, 2).toUpperCase();
+};
 
 // --- open/close state ---
 const mobileOpen = ref(false);
