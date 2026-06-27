@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /profile
+Allow: /
+
+Sitemap: {{ config('app.url') }}/sitemap.xml
