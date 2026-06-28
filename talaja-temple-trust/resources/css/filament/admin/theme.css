@@ -39,106 +39,111 @@
 }
 
 /* ================================================================== *
- * SIDEBAR — clean light theme, bold saffron active (left-bar style)
- * Bullet-proof overrides (!important) to beat Filament's Tailwind utils
+ * SIDEBAR — premium warm theme (v3). Dramatically different look:
+ * saffron-cream gradient bg, tinted active row with left bar + bold
+ * saffron text. All !important to beat Filament's inline Tailwind utils
  * ================================================================== */
 .fi-main.fi-main-ctn > .fi-sidebar,
 .fi-sidebar.fi-main-sidebar,
 .fi-main-sidebar {
-    background-color: #ffffff !important;
-    background-image: linear-gradient(180deg, #fffdf9 0%, #ffffff 40%, #fffaf2 100%) !important;
-    border-right: 1px solid #f0e2d0 !important;
-    box-shadow: 4px 0 24px -16px rgba(124, 49, 15, 0.2) !important;
+    background-color: #fff6e9 !important;
+    background-image: linear-gradient(180deg, #fff3e0 0%, #fff8ef 50%, #fffaf3 100%) !important;
+    border-right: 1px solid #f3d9b8 !important;
+    box-shadow: 6px 0 28px -18px rgba(199, 72, 8, 0.35) !important;
 }
 
-/* Brand header — saffron wash + logo */
+/* Brand header — solid saffron band with logo */
 .fi-sidebar .fi-sidebar-header {
-    background: linear-gradient(135deg, #fff3e2 0%, #ffe9cf 100%) !important;
-    border-bottom: 1px solid #f3d9b8 !important;
+    background: linear-gradient(135deg, #ff7d10 0%, #c74808 100%) !important;
+    border-bottom: none !important;
 }
 .fi-sidebar .fi-sidebar-header .fi-logo {
-    color: #7f310f !important;
+    color: #ffffff !important;
 }
 .fi-sidebar .fi-sidebar-header img {
     border-radius: 9999px !important;
     object-fit: cover !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5) !important;
 }
 
-/* Group labels — maroon uppercase */
+/* Group label — small caps, maroon */
 .fi-sidebar .fi-sidebar-group-label,
 .fi-sidebar .fi-sidebar-group .fi-sidebar-group-label {
     text-transform: uppercase !important;
-    font-size: 0.62rem !important;
-    letter-spacing: 0.14em !important;
+    font-size: 0.6rem !important;
+    letter-spacing: 0.16em !important;
     font-weight: 700 !important;
+    color: #9e390e !important;
+}
+.fi-sidebar .fi-sidebar-group-icon,
+.fi-sidebar .fi-sidebar-group .fi-sidebar-group-icon {
     color: #c74808 !important;
 }
-.fi-sidebar .fi-sidebar-group-collapse-button,
-.fi-sidebar .fi-sidebar-group-button {
-    color: #9e390e !important;
-    border-radius: 0.55rem !important;
+.fi-sidebar .fi-sidebar-group-button,
+.fi-sidebar .fi-sidebar-group-collapse-button {
+    color: #7f310f !important;
+    border-radius: 0.6rem !important;
     transition: background-color 0.15s ease !important;
 }
 .fi-sidebar .fi-sidebar-group-button:hover,
 .fi-sidebar .fi-sidebar-group-collapse-button:hover {
-    background-color: #fff3e2 !important;
-    color: #f06106 !important;
+    background-color: #ffe9cf !important;
+    color: #c74808 !important;
 }
 
-/* --- Nav items: clean, roomy --- */
+/* --- Nav items: spacious, rounded --- */
 .fi-sidebar .fi-sidebar-item .fi-sidebar-item-button {
-    border-radius: 0.6rem !important;
+    border-radius: 0.7rem !important;
     font-weight: 500 !important;
     margin: 2px 0 !important;
-    padding-block: 0.55rem !important;
+    padding-block: 0.6rem !important;
     transition: all 0.15s ease !important;
 }
-/* default label + icon */
 .fi-sidebar .fi-sidebar-item .fi-sidebar-item-label {
-    color: #4b4b4b !important;
+    color: #514a44 !important;
 }
 .fi-sidebar .fi-sidebar-item .fi-sidebar-item-icon {
-    color: #b07d2e !important;
+    color: #c74808 !important;
 }
 
-/* Hover — cream wash + saffron left bar */
+/* Hover — soft saffron tint + left bar */
 .fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:hover,
 .fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:focus-visible {
-    background-color: #fff3e2 !important;
+    background-color: #ffe9cf !important;
     background-image: none !important;
-    box-shadow: inset 4px 0 0 0 #ffc070 !important;
+    box-shadow: inset 4px 0 0 0 #ff9a37 !important;
 }
 .fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:hover .fi-sidebar-item-label {
     color: #7f310f !important;
 }
 .fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:hover .fi-sidebar-item-icon {
-    color: #f06106 !important;
+    color: #c74808 !important;
 }
 
-/* --- ACTIVE item: saffron gradient pill, white text + icon --- */
+/* --- ACTIVE: saffron tint row + bold left bar + saffron bold text --- */
 .fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-button,
 .fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-button,
 .fi-sidebar .fi-sidebar-item-active > .fi-sidebar-item-button,
 .fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-button {
-    background-color: #f06106 !important;
-    background-image: linear-gradient(135deg, #ff7d10 0%, #c74808 100%) !important;
-    box-shadow: inset 4px 0 0 0 #ffd9a8, 0 6px 16px -6px rgba(199, 72, 8, 0.55) !important;
+    background-color: #ffefd4 !important;
+    background-image: none !important;
+    box-shadow: inset 4px 0 0 0 #f06106 !important;
 }
 .fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label,
 .fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-label {
-    color: #ffffff !important;
-    font-weight: 600 !important;
+    color: #c74808 !important;
+    font-weight: 700 !important;
 }
 .fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-icon,
 .fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-icon,
 .fi-sidebar .fi-sidebar-item.fi-active svg,
 .fi-sidebar .fi-sidebar-item-active svg {
-    color: #ffffff !important;
+    color: #c74808 !important;
 }
 /* active sub-item dot → saffron */
 .fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-grouped-border > div:last-child,
 .fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-grouped-border > div:last-child {
-    background-color: #ff7d10 !important;
+    background-color: #f06106 !important;
 }
 
 /* Icon buttons in sidebar */
@@ -146,8 +151,8 @@
     color: #9e390e !important;
 }
 .fi-sidebar .fi-icon-btn:hover {
-    color: #f06106 !important;
-    background-color: #fff3e2 !important;
+    color: #c74808 !important;
+    background-color: #ffe9cf !important;
 }
 
 /* Slim themed scrollbar */
@@ -155,7 +160,7 @@
 .fi-sidebar-nav::-webkit-scrollbar-thumb { background: #f0ddc6; border-radius: 4px; }
 .fi-sidebar-nav::-webkit-scrollbar-thumb:hover { background: #e6b85c; }
 
-/* --- Breadcrumb path: subtle, maroon last item --- */
+/* --- Breadcrumb path --- */
 .fi-breadcrumbs .fi-breadcrumbs-item a:hover { color: #c74808 !important; }
 .fi-breadcrumbs .fi-breadcrumbs-item:last-child { color: #7f310f !important; font-weight: 600 !important; }
 
