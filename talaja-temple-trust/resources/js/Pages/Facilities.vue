@@ -1,19 +1,22 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PageHero from '@/Components/PageHero.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { Hotel, House, Utensils, Flame, HeartPulse, TreePine } from '@lucide/vue';
 
 defineProps({ page: Object, locale: String });
 
-const facilities = [
-    { img: '/storage/facilities/dharamshala.jpg', icon: Hotel, title: 'Dharamshala', desc: 'Comfortable accommodation for pilgrims — Krishnakumarsinhji & Sir Virbhadrasinhji Yatrik Bhawan with AC and non-AC rooms.' },
-    { img: '/storage/about/temple.jpg', icon: House, title: 'Vishram Gruh', desc: 'A peaceful rest house for devotees seeking a quiet retreat near the temple.' },
-    { img: '/storage/facilities/anna.jpg', icon: Utensils, title: 'Annashetra', desc: 'Free wholesome meals (anna seva) served daily to all devotees and visitors.' },
-    { img: '/storage/facilities/havan.jpg', icon: Flame, title: 'Havan Khand', desc: 'Dedicated space for havan, yagna and sacred fire rituals performed by priests.' },
-    { img: '/storage/facilities/medical.jpg', icon: HeartPulse, title: 'Free Medical Services', desc: 'Periodic health camps providing free check-ups and medicines to the community.' },
-    { img: '/storage/facilities/tree.jpg', icon: TreePine, title: 'Environment Initiatives', desc: 'Tree plantation, sustainability and green drives around the temple grounds.' },
-];
+const page = usePage();
+const iconMap = { bed: Hotel, home: House, soup: Utensils, flame: Flame, cross: HeartPulse, trees: TreePine };
+
+// DB-backed facilities (Admin → Settings → facilities), with fallback.
+const facilities = computed(() => (page.props.facilities || []).map((f) => ({
+    img: f.image,
+    icon: iconMap[f.icon] || Hotel,
+    title: f.title,
+    desc: f.desc,
+})));
 </script>
 
 <template>

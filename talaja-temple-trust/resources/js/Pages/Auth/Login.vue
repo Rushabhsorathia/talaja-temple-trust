@@ -9,6 +9,7 @@ const props = defineProps({
     canResetPassword: { type: Boolean, default: true },
     presetMethod: { type: String, default: 'otp' },
     presetMode: { type: String, default: 'signin' },
+    homeStats: { type: Array, default: () => [] },
 });
 
 // ---- method toggle: 'otp' | 'email' ----
@@ -66,9 +67,10 @@ const submitSignup = () => signupForm.post('/register', { onFinish: () => signup
                     <h1 class="mt-2 font-serif text-4xl font-bold leading-tight">Connect with the divine</h1>
                     <p class="mt-4 max-w-md text-cream/80">Donate, book your stay, shop for prasad and receive blessings — all in one place. Your spiritual journey begins here.</p>
                     <div class="mt-8 flex gap-6">
-                        <div><p class="font-serif text-2xl font-bold text-saffron-300">5L+</p><p class="text-xs text-cream/70">Devotees</p></div>
-                        <div><p class="font-serif text-2xl font-bold text-saffron-300">24/7</p><p class="text-xs text-cream/70">Live Darshan</p></div>
-                        <div><p class="font-serif text-2xl font-bold text-saffron-300">100+</p><p class="text-xs text-cream/70">Years</p></div>
+                        <div v-for="s in (homeStats || []).slice(0, 3)" :key="s.label">
+                            <p class="font-serif text-2xl font-bold text-saffron-300">{{ s.value }}</p>
+                            <p class="text-xs text-cream/70">{{ s.label }}</p>
+                        </div>
                     </div>
                 </div>
                 <Link href="/" class="text-sm text-cream/60 hover:text-white">← Back to home</Link>

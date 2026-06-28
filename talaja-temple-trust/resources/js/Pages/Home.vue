@@ -1,6 +1,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import { Video, HandHeart, Bed, ShoppingBag, Users, Clock, Soup, Wifi } from '@lucide/vue';
 
 const props = defineProps({
@@ -11,6 +12,9 @@ const props = defineProps({
     temple: { type: Object, default: null },
     locale: String,
 });
+
+const page = usePage();
+const iconMap = { users: Users, clock: Clock, soup: Soup, wifi: Wifi };
 
 const slides = [
     { img: '/storage/hero/temple-1.jpg', title: 'Talaja Temple Trust', sub: 'A sacred abode of devotion and service', tag: '|| Jay Mataji ||' },
@@ -32,13 +36,14 @@ const services = [
     { icon: ShoppingBag, title: 'Shop', desc: 'Prasad, books and souvenirs delivered to your home.', href: '/shop' },
 ];
 
-const stats = [
-    { icon: Users, value: '5L+', label: 'Devotees Served' },
-    { icon: Clock, value: '100+', label: 'Years of Legacy' },
-    { icon: Soup, value: '500+', label: 'Daily Annaseva' },
-    { icon: Wifi, value: '24/7', label: 'Live Darshan' },
-];
+// DB-backed stats (editable via Admin → Settings → home_stats), with fallback.
+const stats = computed(() => (page.props.homeStats || []).map((s) => ({
+    icon: iconMap[s.icon] || Users,
+    value: s.value,
+    label: s.label,
+})));
 </script>
+
 
 <template>
     <AppLayout :locale="locale">
