@@ -6,7 +6,9 @@ use App\Models\Facility;
 use App\Models\HomeService;
 use App\Models\HomeSlide;
 use App\Models\HomeStat;
+use App\Models\Page;
 use App\Models\Setting;
+use App\Models\SiteSetting;
 use App\Models\Temple;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -106,6 +108,33 @@ class HandleInertiaRequests extends Middleware
             'image' => $f->image_path ? asset('storage/'.$f->image_path) : null,
         ])->all()) ?: $defaultFacilities;
 
+        // CMS-managed pages — each page's sections are editable in Admin →
+        // Site Content → Pages & Sections. Cached briefly; if no record exists
+        // the Vue page falls back to its built-in copy.
+        $pages = cache()->remember('cms.pages', 30, fn () => Page::with(['sections' => fn ($q) => $q->ordered()])->where('is_published', true)->get()->keyBy('slug')->map(function ($p) {
+            return [
+                'title'    => $p->title,
+                'meta'     => array_filter([
+                    'meta_title'       => $p->meta_title,
+                    'meta_description' => $p->meta_description,
+                    'meta_image'       => $p->meta_image,
+                ]),
+                'sections' => $p->sections->where('is_active', true)->mapWithKeys(fn ($s) => [
+                    $s->section_key => [
+                        'type'    => $s->type,
+                        'title'   => $s->title,
+                        'subtitle'=> $s->subtitle,
+                        'content' => $s->content,
+                        'data'    => $s->data,
+                    ],
+                ]),
+            ];
+        }));
+
+        // Grouped site-wide settings (header/footer/social/branding/contact/
+        // seo/scripts). One source of truth instead of raw settings key/value.
+        $siteSettingsGrouped = cache()->remember('cms.site_settings', 30, fn () => SiteSetting::all()->groupBy('group')->map->pluck('value', 'key'));
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -122,13 +151,37 @@ class HandleInertiaRequests extends Middleware
                 'error' => $request->session()->get('error'),
             ],
             'siteSettings' => [
-                'name' => $temple?->name ?? config('app.name'),
-                'tagline' => $setting('site_tagline', env('SITE_TAGLINE', '|| Jay Mataji ||')),
-                'phone' => $temple?->phone ?? env('SITE_PHONE', '+91 0000000000'),
-                'email' => $temple?->email ?? env('SITE_EMAIL', 'contact@talajatemple.org'),
-                'address' => $temple?->address ?? env('SITE_ADDRESS', 'Talaja, Gujarat'),
-                'logo' => $temple?->logo_path,
+                'name' => $siteSettingsGrouped['branding']['site_name'] ?? $temple?->name ?? config('app.name'),
+                'tagline' => $siteSettingsGrouped['branding']['site_tagline'] ?? $setting('site_tagline', env('SITE_TAGLINE', '|| Jay Mataji ||')),
+                'logo' => $siteSettingsGrouped['branding']['site_logo'] ?? $temple?->logo_path,
+                'phone' => $siteSettingsGrouped['contact']['contact_phone'] ?? $temple?->phone ?? env('SITE_PHONE', '+91 0000000000'),
+                'email' => $siteSettingsGrouped['contact']['contact_email'] ?? $temple?->email ?? env('SITE_EMAIL', 'contact@talajatemple.org'),
+                'address' => $siteSettingsGrouped['contact']['contact_address'] ?? $temple?->address ?? env('SITE_ADDRESS', 'Talaja, Gujarat'),
+                'map_embed' => $siteSettingsGrouped['contact']['contact_map'] ?? $temple?->map_embed,
+                'social' => [
+                    'youtube'   => $siteSettingsGrouped['social']['social_youtube']   ?? null,
+                    'instagram' => $siteSettingsGrouped['social']['social_instagram'] ?? null,
+                    'facebook'  => $siteSettingsGrouped['social']['social_facebook']  ?? null,
+                    'twitter'   => $siteSettingsGrouped['social']['social_twitter']   ?? null,
+                ],
+                'footer' => [
+                    'about'      => $siteSettingsGrouped['footer']['footer_about']      ?? null,
+                    'copyright'  => $siteSettingsGrouped['footer']['footer_copyright']  ?? null,
+                ],
+                'header' => [
+                    'show_donate' => ($siteSettingsGrouped['header']['header_show_donate'] ?? '1') !== '0',
+                ],
+                'seo' => [
+                    'default_title'       => $siteSettingsGrouped['seo']['seo_default_title']       ?? null,
+                    'default_description' => $siteSettingsGrouped['seo']['seo_default_description'] ?? null,
+                    'default_image'       => $siteSettingsGrouped['seo']['seo_default_image']       ?? null,
+                ],
+                'scripts' => [
+                    'head'  => $siteSettingsGrouped['scripts']['scripts_head']  ?? null,
+                    'body'  => $siteSettingsGrouped['scripts']['scripts_body']  ?? null,
+                ],
             ],
+            'pages' => $pages,
             'homeStats' => $homeStats,
             'heroSlides' => $slides,
             'services' => $services,

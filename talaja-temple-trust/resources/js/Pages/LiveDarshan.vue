@@ -1,14 +1,31 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import PageHero from '@/Components/PageHero.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
 defineProps({ streamUrl: String, isLive: Boolean, locale: String });
+const page = usePage();
+
+const sections = computed(() => page.props.pages?.['live-darshan']?.sections ?? {});
+const intro = computed(() => sections.value.intro || {});
+
+const introHtml = computed(() => intro.value.content || 'Distance should never come in the way of devotion.');
+
+const aartiSlots = computed(() => {
+    const items = intro.value.data?.slots ?? {
+        'Mangla Aarti': '05:00',
+        'Sandhya Aarti': '19:00',
+        'Shayan Aarti': '20:30',
+    };
+    return Object.entries(items).slice(0, 3);
+});
 </script>
 
 <template>
     <AppLayout :locale="locale">
-        <Head><title>Live Darshan</title></Head>
-        <PageHero title="Live Darshan" subtitle="Experience the divine presence from anywhere in the world" image="/storage/hero/temple-1.jpg" breadcrumb="Home · Live Darshan" />
+        <Head><title>{{ intro.title || 'Live Darshan' }}</title></Head>
+        <PageHero :title="intro.title || 'Live Darshan'" :subtitle="intro.subtitle || 'Experience the divine presence from anywhere in the world'" image="/storage/hero/temple-1.jpg" breadcrumb="Home · Live Darshan" />
 
         <!-- Stream — clean white section -->
         <section class="bg-white py-10">
@@ -31,21 +48,11 @@ defineProps({ streamUrl: String, isLive: Boolean, locale: String });
 
         <section class="mx-auto max-w-3xl px-4 py-16 text-center">
             <h2 class="font-serif text-3xl font-bold text-maroon-900">Darshan, Anytime, Anywhere</h2>
-            <p class="mx-auto mt-4 max-w-2xl text-gray-600">
-                Distance should never come in the way of devotion. Whether near or far, stay connected to the temple and be part of every aarti and special event as it happens. Darshan timings follow the temple's aarti and seva schedule.
-            </p>
-            <div class="mt-8 grid gap-4 sm:grid-cols-3">
-                <div class="rounded-2xl bg-saffron-50 p-6">
-                    <p class="font-serif text-2xl font-bold text-saffron-600">05:00</p>
-                    <p class="text-sm text-gray-500">Mangla Aarti</p>
-                </div>
-                <div class="rounded-2xl bg-saffron-50 p-6">
-                    <p class="font-serif text-2xl font-bold text-saffron-600">19:00</p>
-                    <p class="text-sm text-gray-500">Sandhya Aarti</p>
-                </div>
-                <div class="rounded-2xl bg-saffron-50 p-6">
-                    <p class="font-serif text-2xl font-bold text-saffron-600">20:30</p>
-                    <p class="text-sm text-gray-500">Shayan Aarti</p>
+            <p class="mx-auto mt-4 max-w-2xl text-gray-600" v-html="introHtml"></p>
+            <div v-if="aartiSlots.length" class="mt-8 grid gap-4 sm:grid-cols-3">
+                <div v-for="[label, time] in aartiSlots" :key="label" class="rounded-2xl bg-saffron-50 p-6">
+                    <p class="font-serif text-2xl font-bold text-saffron-600">{{ time }}</p>
+                    <p class="text-sm text-gray-500">{{ label }}</p>
                 </div>
             </div>
         </section>

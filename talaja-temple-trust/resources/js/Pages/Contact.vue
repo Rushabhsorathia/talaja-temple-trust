@@ -1,9 +1,17 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { Phone, Mail } from '@lucide/vue';
 
-defineProps({ temple: Object, locale: String, flash: Object });
+const props = defineProps({ temple: Object, locale: String, flash: Object });
+const page = usePage();
+
+const settings = computed(() => page.props.siteSettings || {});
+const phone = computed(() => settings.value.phone || props.temple?.phone);
+const email = computed(() => settings.value.email || props.temple?.email);
+const address = computed(() => settings.value.address || props.temple?.address);
+const map = computed(() => settings.value.map_embed || props.temple?.map_embed);
 
 const form = useForm({
     type: 'feedback',
@@ -27,10 +35,10 @@ const submit = () => form.post('/contact-us', { preserveScroll: true, onSuccess:
         <section class="mx-auto grid max-w-5xl gap-10 px-4 py-16 md:grid-cols-2">
             <div>
                 <h2 class="mb-4 font-serif text-2xl text-maroon-900">Reach Us</h2>
-                <p class="text-gray-600" v-html="temple?.address || ''"></p>
-                <p class="mt-2 flex items-center gap-2 text-gray-600" v-if="temple?.phone"><Phone class="h-4 w-4 text-saffron-600" /> {{ temple.phone }}</p>
-                <p class="flex items-center gap-2 text-gray-600" v-if="temple?.email"><Mail class="h-4 w-4 text-saffron-600" /> {{ temple.email }}</p>
-                <iframe v-if="temple?.map_embed" :src="temple.map_embed" class="mt-4 h-56 w-full rounded-xl border-0" loading="lazy"></iframe>
+                <p class="whitespace-pre-line text-gray-600" v-html="address"></p>
+                <p v-if="phone" class="mt-2 flex items-center gap-2 text-gray-600"><Phone class="h-4 w-4 text-saffron-600" /> {{ phone }}</p>
+                <p v-if="email" class="flex items-center gap-2 text-gray-600"><Mail class="h-4 w-4 text-saffron-600" /> {{ email }}</p>
+                <iframe v-if="map" :src="map" class="mt-4 h-56 w-full rounded-xl border-0" loading="lazy"></iframe>
             </div>
             <div class="card-temple">
                 <h2 class="mb-4 font-serif text-2xl text-maroon-900">Send a Message</h2>

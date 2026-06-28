@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RolesAndAdminSeeder::class,
             ComprehensiveDataSeeder::class,
             SiteContentSeeder::class,
+            CmsStructureSeeder::class,
         ]);
     }
 }

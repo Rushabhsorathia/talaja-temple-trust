@@ -274,17 +274,159 @@
     background-color: #c74808;
 }
 
-/* --- Tables: neutral header, subtle row hover --------------------- */
-.fi-ta-header-cell {
-    background-color: #f8fafc; /* slate-50 */
-    text-transform: none;
-    font-size: 0.72rem;
-    letter-spacing: 0;
-    font-weight: 600;
+/* ================================================================== *
+ *  TABLE — filter card and table card rendered as TWO separate cards
+ * ================================================================== */
+
+/* Strip the outer wrapper so the two children become independent cards */
+.fi-ta-ctn {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    divide-y: 0 !important;
+}
+.fi-ta-ctn > .divide-y > * + * {
+    border-top: 0 !important;
+}
+.fi-ta > .fi-ta-ctn {
+    padding: 0 !important;
+}
+
+/* The header container (heading + filters + toolbar) becomes the filter card */
+.fi-ta-header-ctn {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 0.6rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+    margin-bottom: 0.75rem !important;
+    overflow: hidden !important;
+    divide-y: 1px solid #f1f5f9 !important;
+}
+.fi-ta-header-ctn > * + * {
+    border-top: 1px solid #f1f5f9;
+}
+
+/* The table body becomes the second card */
+.fi-ta-content {
+    background-color: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-top: none !important;
+    border-radius: 0 0 0.6rem 0.6rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+    overflow: hidden !important;
+}
+.fi-ta-content.fi-ta-content-ctn {
+    margin: 0 !important;
+    border-radius: 0.6rem !important;
+    border-top: 1px solid #e5e7eb !important;
+}
+
+/* When no filters/toolbar/header at all, just the content gets the card */
+.fi-ta > .fi-ta-ctn > .fi-ta-content:only-child {
+    border-top: 1px solid #e5e7eb !important;
+    border-radius: 0.6rem !important;
+}
+
+/* Pagination sits inside the table card */
+.fi-ta-pagination {
+    padding: 0.75rem 1rem;
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+.fi-ta-pagination .fi-btn {
+    border-radius: 0.4rem;
+}
+
+/* Selection / filter indicators stay inside the table card */
+.fi-ta-selection-indicator,
+.fi-ta-filters-indicators {
+    background-color: #fff7ed !important;
+    border-top: 1px solid #fed7aa !important;
+    color: #9a3412 !important;
+}
+
+/* --- Header (heading + actions) inside the filter card --- */
+.fi-ta-header {
+    padding: 0.875rem 1rem !important;
+}
+.fi-ta-header-heading {
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    letter-spacing: -0.01em !important;
+}
+.fi-ta-header-description {
+    font-size: 0.78rem !important;
+    color: #64748b !important;
+    margin-top: 2px !important;
+}
+
+/* --- Filters section inside the filter card --- */
+.fi-ta-filters-above-content-ctn {
+    padding: 0.875rem 1rem !important;
+    background-color: #f8fafc !important;
+    border-top: 1px solid #f1f5f9;
+}
+.fi-ta-filters {
+    gap: 0.625rem !important;
+}
+.fi-ta-filters-toggle {
     color: #475569;
+}
+.fi-ta-filters-toggle:hover {
+    color: #f06106;
+}
+.fi-ta-filters .fi-input-wrp {
+    border-radius: 0.4rem;
+    background-color: #ffffff;
+}
+
+/* --- Toolbar (bulk actions, search) inside the filter card --- */
+.fi-ta-header-toolbar {
+    padding: 0.75rem 1rem !important;
+    background-color: #ffffff !important;
+    border-top: 1px solid #f1f5f9;
+}
+
+/* --- Table header cell (column titles) --- */
+.fi-ta-header-cell {
+    background-color: #f8fafc !important;
+    text-transform: none !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0 !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    padding-top: 0.625rem !important;
+    padding-bottom: 0.625rem !important;
 }
 .fi-ta-row:hover {
     background-color: #f8fafc;
+}
+.fi-ta-row {
+    transition: background-color 0.12s ease;
+}
+
+/* Summarizers (totals at the bottom of tables) */
+.fi-ta-summary-row td {
+    background-color: #f8fafc !important;
+    font-weight: 600 !important;
+    color: #0f172a !important;
+    border-top: 2px solid #e5e7eb !important;
+}
+
+/* Remove the old .fi-ta-filters standalone card since it's now inside the new card */
+.fi-ta-ctn > .fi-ta-header-ctn + .fi-ta-content {
+    border-top: none !important;
+}
+
+/* --- Empty state: friendly CTA --- */
+.fi-ta-empty-state {
+    padding: 3rem 1rem;
+}
+.fi-ta-empty-state-cta {
+    color: #f06106;
 }
 
 /* --- Login & auth screens: clean neutral ------------------------- */
@@ -304,4 +446,47 @@
 /* --- Section header icons: restrained accent --------------------- */
 .fi-section-header-icon {
     color: #f06106;
+}
+
+/* ================================================================== *
+ *  MOBILE / RESPONSIVE — friendly on tablets and phones
+ * ================================================================== */
+@media (max-width: 768px) {
+    /* Tables: tighter padding, slightly smaller font */
+    .fi-ta-cell, .fi-ta-header-cell {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        font-size: 0.78rem !important;
+    }
+    /* Sections / form cards: more breathing room on small screens */
+    .fi-section {
+        padding: 0.75rem !important;
+    }
+    /* Toolbar: stack buttons on small screens */
+    .fi-ta-header-toolbar .fi-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    /* Filters: full width */
+    .fi-ta-filters .fi-input-wrp {
+        width: 100%;
+    }
+}
+
+/* Form fields: slightly larger tap targets on touch devices */
+@media (pointer: coarse) {
+    .fi-input-wrp input,
+    .fi-input-wrp textarea,
+    .fi-input-wrp select,
+    .fi-select-input-el {
+        min-height: 2.5rem;
+    }
+}
+
+/* Action group dropdown — make it more visible on hover */
+.fi-ta-actions-cell .fi-icon-btn {
+    transition: background-color 0.12s ease;
+}
+.fi-ta-actions-cell .fi-icon-btn:hover {
+    background-color: #f1f5f9;
 }

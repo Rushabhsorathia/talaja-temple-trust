@@ -58,11 +58,17 @@ class AdminPanelProvider extends PanelProvider
             ->font('Inter')
             ->sidebarCollapsibleOnDesktop()
             ->maxContentWidth(MaxWidth::ScreenTwoExtraLarge)
+            // Global search (works on resources that declare
+            // getGloballySearchableAttributes).
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->unsavedChangesAlerts()
             // Accordion-style nav: groups are collapsible; the primary
             // "Donations" group stays open and the rest start collapsed so the
             // sidebar is compact. Each user's toggle state then persists.
             ->collapsibleNavigationGroups()
             ->navigationGroups([
+                NavigationGroup::make('Site Content')->collapsible(),
+                NavigationGroup::make('Users & Access')->collapsed(),
                 NavigationGroup::make('Donations'),
                 NavigationGroup::make('Finance')->collapsed(),
                 NavigationGroup::make('Accommodation')->collapsed(),

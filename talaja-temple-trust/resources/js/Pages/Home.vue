@@ -10,6 +10,7 @@ const props = defineProps({
     galleryPreview: { type: Array, default: () => [] },
     trustees: { type: Array, default: () => [] },
     temple: { type: Object, default: null },
+    cmsHeroSlides: { type: Array, default: () => [] },
     locale: String,
 });
 
@@ -17,12 +18,20 @@ const page = usePage();
 const iconMap = { users: Users, clock: Clock, soup: Soup, wifi: Wifi };
 const svcIconMap = { video: Video, heart: HandHeart, bed: Bed, bag: ShoppingBag };
 
-// CMS-backed hero slides + services (editable via Admin → Settings).
-const slides = computed(() => (page.props.heroSlides && page.props.heroSlides.length) ? page.props.heroSlides : [
-    { img: '/storage/hero/temple-1.jpg', title: 'Talaja Temple Trust', sub: 'A sacred abode of devotion and service', tag: '|| Jay Mataji ||' },
-    { img: '/storage/hero/temple-2.jpg', title: 'Connect With the Divine', sub: 'Live darshan, donations and blessings — anytime, anywhere', tag: '|| Om Namah Shivay ||' },
-    { img: '/storage/hero/temple-3.jpg', title: 'A Legacy of Faith', sub: 'Serving devotees with devotion for generations', tag: '|| Har Har Mahadev ||' },
-]);
+const homeSections = computed(() => page.props.pages?.home?.sections ?? {});
+const introSection = computed(() => homeSections.value.intro || {});
+const ctaSection = computed(() => homeSections.value.cta || {});
+
+// Priority: CMS page-section hero slides → existing HomeSlide table → hard fallback.
+const slides = computed(() => {
+    if (props.cmsHeroSlides?.length) return props.cmsHeroSlides;
+    if (page.props.heroSlides?.length) return page.props.heroSlides;
+    return [
+        { img: '/storage/hero/temple-1.jpg', title: 'Talaja Temple Trust', sub: 'A sacred abode of devotion and service', tag: '|| Jay Mataji ||' },
+        { img: '/storage/hero/temple-2.jpg', title: 'Connect With the Divine', sub: 'Live darshan, donations and blessings — anytime, anywhere', tag: '|| Om Namah Shivay ||' },
+        { img: '/storage/hero/temple-3.jpg', title: 'A Legacy of Faith', sub: 'Serving devotees with devotion for generations', tag: '|| Har Har Mahadev ||' },
+    ];
+});
 
 const current = ref(0);
 let interval;
@@ -46,6 +55,9 @@ const stats = computed(() => (page.props.homeStats || []).map((s) => ({
     value: s.value,
     label: s.label,
 })));
+
+// Intro content (CMS-driven, falls back to temple.about_trust).
+const introHtml = computed(() => introSection.value.content || props.temple?.translation?.about_trust || '<p>Nestled in the serene landscape of Talaja, our temple has been a beacon of faith for generations.</p>');
 </script>
 
 
@@ -108,16 +120,16 @@ const stats = computed(() => (page.props.homeStats || []).map((s) => ({
         <section class="mx-auto max-w-7xl px-4 py-20">
             <div class="grid items-center gap-12 lg:grid-cols-2">
                 <div>
-                    <p class="mb-2 font-serif text-sm font-semibold uppercase tracking-widest text-saffron-600">Welcome to</p>
-                    <h2 class="mb-5 font-serif text-3xl font-bold text-maroon-900 md:text-4xl">A Legacy of Devotion and Service</h2>
-                    <div class="space-y-4 text-gray-600" v-html="temple?.translation?.about_trust || '<p>Nestled in the serene landscape of Talaja, our temple has been a beacon of faith for generations.</p>'"></div>
+                    <p v-if="introSection.subtitle" class="mb-2 font-serif text-sm font-semibold uppercase tracking-widest text-saffron-600">{{ introSection.subtitle }}</p>
+                    <h2 class="mb-5 font-serif text-3xl font-bold text-maroon-900 md:text-4xl">{{ introSection.title || 'A Legacy of Devotion and Service' }}</h2>
+                    <div class="space-y-4 text-gray-600" v-html="introHtml"></div>
                     <div class="mt-8 flex flex-wrap gap-3">
                         <a href="/about-us" class="rounded-full bg-saffron-500 px-6 py-3 font-semibold text-white shadow-sm ring-1 ring-saffron-600 transition hover:bg-saffron-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500 focus-visible:ring-offset-2">Read More</a>
                         <a href="/trustees" class="rounded-full border border-gray-300 px-6 py-3 font-semibold text-gray-700 transition hover:border-saffron-400 hover:text-saffron-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500 focus-visible:ring-offset-2">Our Trustees</a>
                     </div>
                 </div>
                 <div class="relative">
-                    <img src="/storage/about/temple.jpg" alt="Temple" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-lg" loading="lazy" />
+                    <img :src="introSection.data?.image || '/storage/about/temple.jpg'" alt="Temple" class="aspect-[4/3] w-full rounded-2xl object-cover shadow-lg" loading="lazy" />
                     <img src="/storage/about/lake.jpg" alt="Temple lake" class="absolute -bottom-6 -left-6 hidden h-44 w-44 rounded-2xl border-4 border-white object-cover shadow-xl md:block" loading="lazy" />
                     <div class="absolute -right-4 -top-4 rounded-2xl bg-white px-5 py-4 text-center shadow-lg ring-1 ring-gray-100">
                         <p class="font-serif text-2xl font-bold text-saffron-600">100+</p>
@@ -202,10 +214,10 @@ const stats = computed(() => (page.props.homeStats || []).map((s) => ({
         <!-- CTA -->
         <section class="bg-white py-20">
             <div class="mx-auto max-w-3xl px-4 text-center">
-                <h2 class="font-serif text-3xl font-bold text-maroon-900 md:text-4xl">Begin Your Spiritual Journey</h2>
-                <p class="mx-auto mt-3 max-w-xl text-gray-500">Join thousands of devotees. Donate, book your stay, or simply receive blessings.</p>
+                <h2 class="font-serif text-3xl font-bold text-maroon-900 md:text-4xl">{{ ctaSection.title || 'Begin Your Spiritual Journey' }}</h2>
+                <p class="mx-auto mt-3 max-w-xl text-gray-500">{{ ctaSection.subtitle || 'Join thousands of devotees. Donate, book your stay, or simply receive blessings.' }}</p>
                 <div class="mt-8 flex flex-wrap justify-center gap-3">
-                    <a href="/donate" class="rounded-full bg-saffron-500 px-8 py-3.5 font-semibold text-white shadow-sm ring-1 ring-saffron-600 transition hover:bg-saffron-600 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500 focus-visible:ring-offset-2">Donate Now</a>
+                    <a :href="ctaSection.data?.cta_href || '/donate'" class="rounded-full bg-saffron-500 px-8 py-3.5 font-semibold text-white shadow-sm ring-1 ring-saffron-600 transition hover:bg-saffron-600 hover:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500 focus-visible:ring-offset-2">{{ ctaSection.data?.cta_label || 'Donate Now' }}</a>
                     <a href="/contact-us" class="rounded-full border border-gray-300 px-8 py-3.5 font-semibold text-gray-700 transition hover:border-saffron-400 hover:text-saffron-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-saffron-500 focus-visible:ring-offset-2">Contact Us</a>
                 </div>
             </div>

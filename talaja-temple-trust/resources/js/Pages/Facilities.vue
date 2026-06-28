@@ -5,27 +5,32 @@ import { Head, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 import { Hotel, House, Utensils, Flame, HeartPulse, TreePine } from '@lucide/vue';
 
-defineProps({ page: Object, locale: String });
+const props = defineProps({ page: Object, locale: String });
 
-const page = usePage();
+const inertiaPage = usePage();
 const iconMap = { bed: Hotel, home: House, soup: Utensils, flame: Flame, cross: HeartPulse, trees: TreePine };
 
-// DB-backed facilities (Admin → Settings → facilities), with fallback.
-const facilities = computed(() => (page.props.facilities || []).map((f) => ({
+const sections = computed(() => inertiaPage.props.pages?.facilities?.sections ?? {});
+const intro = computed(() => sections.value.intro || {});
+const cta = computed(() => sections.value.cta || {});
+
+const facilities = computed(() => (inertiaPage.props.facilities || []).map((f) => ({
     img: f.image,
     icon: iconMap[f.icon] || Hotel,
     title: f.title,
     desc: f.desc,
 })));
+
+const introHtml = computed(() => intro.value.content || props.page?.content || '<p>The trust offers a wide range of facilities and community services for devotees and visitors.</p>');
 </script>
 
 <template>
     <AppLayout :locale="locale">
-        <Head><title>Facilities & Offerings</title></Head>
-        <PageHero title="Facilities & Offerings" subtitle="Serving devotees with comfort, care and devotion" image="/storage/facilities/dharamshala.jpg" breadcrumb="Home · Facilities" />
+        <Head><title>{{ intro.title || 'Facilities & Offerings' }}</title></Head>
+        <PageHero :title="intro.title || 'Facilities & Offerings'" :subtitle="intro.subtitle || 'Serving devotees with comfort, care and devotion'" image="/storage/facilities/dharamshala.jpg" breadcrumb="Home · Facilities" />
 
         <section class="mx-auto max-w-3xl px-4 py-12">
-            <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-maroon-900" v-html="page?.content || '<p>The trust offers a wide range of facilities and community services for devotees and visitors.</p>'"></div>
+            <div class="prose prose-lg max-w-none prose-headings:font-serif prose-headings:text-maroon-900" v-html="introHtml"></div>
         </section>
 
         <section class="mx-auto max-w-7xl px-4 pb-20">
@@ -46,11 +51,11 @@ const facilities = computed(() => (page.props.facilities || []).map((f) => ({
         </section>
 
         <!-- Booking CTA -->
-        <section class="bg-gradient-to-r from-cream-100 to-cream-200 py-14">
+        <section v-if="cta.title" class="bg-gradient-to-r from-cream-100 to-cream-200 py-14">
             <div class="mx-auto flex max-w-4xl flex-col items-center px-4 text-center text-maroon-900">
-                <h2 class="mb-3 font-serif text-3xl font-bold">Plan Your Visit</h2>
-                <p class="mb-8 text-gray-700">Book your accommodation or event hall in advance for a comfortable stay.</p>
-                <a href="/bookings" class="rounded-full bg-saffron-600 px-8 py-3.5 font-semibold text-white shadow-xl transition hover:scale-105">Book Now</a>
+                <h2 class="mb-3 font-serif text-3xl font-bold">{{ cta.title }}</h2>
+                <p v-if="cta.subtitle" class="mb-8 text-gray-700">{{ cta.subtitle }}</p>
+                <a v-if="cta.data?.cta_href" :href="cta.data.cta_href" class="rounded-full bg-saffron-600 px-8 py-3.5 font-semibold text-white shadow-xl transition hover:scale-105">{{ cta.data.cta_label || 'Learn more' }}</a>
             </div>
         </section>
     </AppLayout>

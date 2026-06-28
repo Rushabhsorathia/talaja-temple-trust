@@ -127,10 +127,10 @@ const logout = () => {
             <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 lg:px-6" aria-label="Main">
                 <!-- Logo -->
                 <Link href="/" class="flex shrink-0 items-center gap-2.5" @click="closeAll">
-                    <img src="/storage/temple/logo.jpg" alt="Temple logo" class="h-10 w-10 rounded-full object-cover ring-2 ring-saffron-200 lg:h-11 lg:w-11" />
+                    <img :src="settings.logo ? `/storage/${settings.logo}` : '/storage/temple/logo.jpg'" alt="Temple logo" class="h-10 w-10 rounded-full object-cover ring-2 ring-saffron-200 lg:h-11 lg:w-11" />
                     <div class="leading-tight">
                         <p class="font-serif text-sm font-bold text-maroon-900 lg:text-base">{{ settings.name || 'Talaja Temple Trust' }}</p>
-                        <p class="hidden text-[10px] tracking-wider text-saffron-500 sm:block">|| Jay Mataji ||</p>
+                        <p class="hidden text-[10px] tracking-wider text-saffron-500 sm:block">{{ settings.tagline || '|| Jay Mataji ||' }}</p>
                     </div>
                 </Link>
 
@@ -214,10 +214,10 @@ const logout = () => {
             <aside v-if="mobileOpen" class="fixed right-0 top-0 z-50 flex h-full w-[85%] max-w-sm flex-col bg-white shadow-2xl lg:hidden">
                 <!-- Drawer header -->
                 <div class="flex items-center justify-between border-b border-gray-100 px-4 py-3">
-                    <div class="flex items-center gap-2">
-                        <img src="/storage/temple/logo.jpg" alt="Logo" class="h-9 w-9 rounded-full object-cover ring-1 ring-saffron-200" />
-                        <p class="font-serif text-sm font-bold text-maroon-900">{{ settings.name }}</p>
-                    </div>
+<div class="flex items-center gap-2">
+                    <img :src="settings.logo ? `/storage/${settings.logo}` : '/storage/temple/logo.jpg'" alt="Logo" class="h-9 w-9 rounded-full object-cover ring-1 ring-saffron-200" />
+                    <p class="font-serif text-sm font-bold text-maroon-900">{{ settings.name }}</p>
+                </div>
                     <button @click="closeAll" class="rounded-lg p-2 text-gray-500 hover:bg-saffron-50" aria-label="Close menu"><X :size="22" /></button>
                 </div>
 
@@ -283,14 +283,14 @@ const logout = () => {
             <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-4 md:px-6">
                 <div>
                     <div class="mb-4 flex items-center gap-3">
-                        <img src="/storage/temple/logo.jpg" alt="Logo" class="h-12 w-12 rounded-full object-cover ring-2 ring-saffron-400/40" />
+                        <img :src="settings.logo ? `/storage/${settings.logo}` : '/storage/temple/logo.jpg'" alt="Logo" class="h-12 w-12 rounded-full object-cover ring-2 ring-saffron-400/40" />
                         <p class="font-serif text-lg font-bold text-saffron-300">{{ settings.name }}</p>
                     </div>
                     <p class="text-sm leading-relaxed text-gray-400" v-html="settings.address"></p>
                     <div class="mt-4 flex gap-3">
-                        <a href="#" aria-label="YouTube" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600"><svg :width="16" :height="16" viewBox="0 0 24 24" fill="currentColor"><path :d="iconYoutube" /></svg></a>
-                        <a href="#" aria-label="Instagram" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600"><svg :width="16" :height="16" viewBox="0 0 24 24" fill="currentColor"><path :d="iconInstagram" /></svg></a>
-                        <a href="#" aria-label="Facebook" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600"><svg :width="16" :height="16" viewBox="0 0 24 24" fill="currentColor"><path :d="iconFacebook" /></svg></a>
+                        <a v-if="settings.social?.youtube" :href="settings.social.youtube" aria-label="YouTube" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600"><svg :width="16" :height="16" viewBox="0 0 24 24" fill="currentColor"><path :d="iconYoutube" /></svg></a>
+                        <a v-if="settings.social?.instagram" :href="settings.social.instagram" aria-label="Instagram" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600"><svg :width="16" :height="16" viewBox="0 0 24 24" fill="currentColor"><path :d="iconInstagram" /></svg></a>
+                        <a v-if="settings.social?.facebook" :href="settings.social.facebook" aria-label="Facebook" class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-saffron-600"><svg :width="16" :height="16" viewBox="0 0 24 24" fill="currentColor"><path :d="iconFacebook" /></svg></a>
                     </div>
                 </div>
                 <div>
@@ -315,12 +315,12 @@ const logout = () => {
                 </div>
                 <div>
                     <h3 class="mb-4 font-serif text-base font-semibold text-saffron-300">Reach Us</h3>
-                    <p class="flex items-center gap-2 text-sm text-gray-400"><Phone :size="14" class="text-saffron-400" />{{ settings.phone }}</p>
-                    <p class="mt-1 flex items-center gap-2 text-sm text-gray-400"><Mail :size="14" class="text-saffron-400" />{{ settings.email }}</p>
+                    <p v-if="settings.phone" class="flex items-center gap-2 text-sm text-gray-400"><Phone :size="14" class="text-saffron-400" />{{ settings.phone }}</p>
+                    <p v-if="settings.email" class="mt-1 flex items-center gap-2 text-sm text-gray-400"><Mail :size="14" class="text-saffron-400" />{{ settings.email }}</p>
                 </div>
             </div>
             <div class="border-t border-white/10 py-4 text-center text-xs text-gray-500">
-                {{ (nav.copyright || '© :year Talaja Temple Trust').replace(':year', year) }} · Designed with devotion.
+                {{ (settings.footer?.copyright || nav.copyright || '© :year Talaja Temple Trust').replace(':year', year) }} · Designed with devotion.
             </div>
         </footer>
     </div>
