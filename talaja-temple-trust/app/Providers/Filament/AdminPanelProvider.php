@@ -63,29 +63,14 @@ class AdminPanelProvider extends PanelProvider
             // sidebar is compact. Each user's toggle state then persists.
             ->collapsibleNavigationGroups()
             ->navigationGroups([
-                NavigationGroup::make('Donations')
-                    ->icon('heroicon-o-banknotes'),
-                NavigationGroup::make('Finance')
-                    ->icon('heroicon-o-building-library')
-                    ->collapsed(),
-                NavigationGroup::make('Accommodation')
-                    ->icon('heroicon-o-home-modern')
-                    ->collapsed(),
-                NavigationGroup::make('Shop')
-                    ->icon('heroicon-o-shopping-bag')
-                    ->collapsed(),
-                NavigationGroup::make('Content')
-                    ->icon('heroicon-o-newspaper')
-                    ->collapsed(),
-                NavigationGroup::make('Communication')
-                    ->icon('heroicon-o-chat-bubble-left-right')
-                    ->collapsed(),
-                NavigationGroup::make('Configuration')
-                    ->icon('heroicon-o-cog-6-tooth')
-                    ->collapsed(),
-                NavigationGroup::make('Reports')
-                    ->icon('heroicon-o-chart-bar')
-                    ->collapsed(),
+                NavigationGroup::make('Donations'),
+                NavigationGroup::make('Finance')->collapsed(),
+                NavigationGroup::make('Accommodation')->collapsed(),
+                NavigationGroup::make('Shop')->collapsed(),
+                NavigationGroup::make('Content')->collapsed(),
+                NavigationGroup::make('Communication')->collapsed(),
+                NavigationGroup::make('Configuration')->collapsed(),
+                NavigationGroup::make('Reports')->collapsed(),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
