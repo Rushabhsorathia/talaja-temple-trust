@@ -39,114 +39,125 @@
 }
 
 /* ================================================================== *
- * SIDEBAR — clean light theme with saffron accents (modern & airy)
+ * SIDEBAR — clean light theme, bold saffron active (left-bar style)
+ * Bullet-proof overrides (!important) to beat Filament's Tailwind utils
  * ================================================================== */
-.fi-main-sidebar,
-.fi-sidebar.fi-main-sidebar {
-    background-color: #ffffff;
-    background-image: linear-gradient(180deg, #fffdf9 0%, #ffffff 30%, #fffaf2 100%);
-    border-right: 1px solid #f0e2d0;
-    box-shadow: 4px 0 24px -16px rgba(124, 49, 15, 0.18);
+.fi-main.fi-main-ctn > .fi-sidebar,
+.fi-sidebar.fi-main-sidebar,
+.fi-main-sidebar {
+    background-color: #ffffff !important;
+    background-image: linear-gradient(180deg, #fffdf9 0%, #ffffff 40%, #fffaf2 100%) !important;
+    border-right: 1px solid #f0e2d0 !important;
+    box-shadow: 4px 0 24px -16px rgba(124, 49, 15, 0.2) !important;
 }
 
-/* Branded header (logo block) — subtle saffron wash */
-.fi-sidebar-header {
-    background: linear-gradient(135deg, #fff3e2 0%, #ffe9cf 100%);
-    border-bottom: 1px solid #f3d9b8;
+/* Brand header — saffron wash + logo */
+.fi-sidebar .fi-sidebar-header {
+    background: linear-gradient(135deg, #fff3e2 0%, #ffe9cf 100%) !important;
+    border-bottom: 1px solid #f3d9b8 !important;
 }
-.fi-sidebar-header .fi-logo {
-    color: #7f310f; /* maroon */
+.fi-sidebar .fi-sidebar-header .fi-logo {
+    color: #7f310f !important;
+}
+.fi-sidebar .fi-sidebar-header img {
+    border-radius: 9999px !important;
+    object-fit: cover !important;
 }
 
-/* Group labels: maroon, uppercase, refined */
-.fi-sidebar .fi-sidebar-group-label {
-    text-transform: uppercase;
-    font-size: 0.64rem;
-    letter-spacing: 0.12em;
-    font-weight: 700;
-    color: #c74808; /* saffron-700 */
+/* Group labels — maroon uppercase */
+.fi-sidebar .fi-sidebar-group-label,
+.fi-sidebar .fi-sidebar-group .fi-sidebar-group-label {
+    text-transform: uppercase !important;
+    font-size: 0.62rem !important;
+    letter-spacing: 0.14em !important;
+    font-weight: 700 !important;
+    color: #c74808 !important;
 }
 .fi-sidebar .fi-sidebar-group-collapse-button,
 .fi-sidebar .fi-sidebar-group-button {
-    color: #9e390e;
+    color: #9e390e !important;
+    border-radius: 0.55rem !important;
+    transition: background-color 0.15s ease !important;
 }
-/* Group header reads as a clickable accordion row */
-.fi-sidebar .fi-sidebar-group-button {
-    border-radius: 0.6rem;
-    padding-block: 0.4rem;
-    transition: background-color 0.15s ease;
-}
-.fi-sidebar .fi-sidebar-group-button:hover {
-    background-color: #fff3e2;
-}
+.fi-sidebar .fi-sidebar-group-button:hover,
 .fi-sidebar .fi-sidebar-group-collapse-button:hover {
-    color: #f06106;
-}
-
-/* Nav items */
-.fi-sidebar .fi-sidebar-item-button {
-    border-radius: 0.6rem;
-    font-weight: 500;
-    margin: 1px 0;
-    transition: all 0.15s ease;
-}
-.fi-sidebar .fi-sidebar-item-label {
-    color: #4a4a4a; /* neutral dark gray */
-}
-.fi-sidebar .fi-sidebar-item-icon {
-    color: #b8843a; /* muted gold/saffron */
-}
-/* Hover — warm cream wash + saffron left accent */
-.fi-sidebar .fi-sidebar-item-button:hover,
-.fi-sidebar .fi-sidebar-item-button:focus-visible {
     background-color: #fff3e2 !important;
-    background-image: none;
-    box-shadow: inset 3px 0 0 0 #ffc070;
-}
-.fi-sidebar .fi-sidebar-item-button:hover .fi-sidebar-item-label {
-    color: #7f310f;
-}
-.fi-sidebar .fi-sidebar-item-button:hover .fi-sidebar-item-icon {
-    color: #f06106;
+    color: #f06106 !important;
 }
 
-/* Active item — solid saffron pill with white text, soft shadow */
+/* --- Nav items: clean, roomy --- */
+.fi-sidebar .fi-sidebar-item .fi-sidebar-item-button {
+    border-radius: 0.6rem !important;
+    font-weight: 500 !important;
+    margin: 2px 0 !important;
+    padding-block: 0.55rem !important;
+    transition: all 0.15s ease !important;
+}
+/* default label + icon */
+.fi-sidebar .fi-sidebar-item .fi-sidebar-item-label {
+    color: #4b4b4b !important;
+}
+.fi-sidebar .fi-sidebar-item .fi-sidebar-item-icon {
+    color: #b07d2e !important;
+}
+
+/* Hover — cream wash + saffron left bar */
+.fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:hover,
+.fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:focus-visible {
+    background-color: #fff3e2 !important;
+    background-image: none !important;
+    box-shadow: inset 4px 0 0 0 #ffc070 !important;
+}
+.fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:hover .fi-sidebar-item-label {
+    color: #7f310f !important;
+}
+.fi-sidebar .fi-sidebar-item .fi-sidebar-item-button:hover .fi-sidebar-item-icon {
+    color: #f06106 !important;
+}
+
+/* --- ACTIVE item: saffron gradient pill, white text + icon --- */
 .fi-sidebar .fi-sidebar-item.fi-active > .fi-sidebar-item-button,
-.fi-sidebar .fi-sidebar-item-active > .fi-sidebar-item-button {
+.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-button,
+.fi-sidebar .fi-sidebar-item-active > .fi-sidebar-item-button,
+.fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-button {
     background-color: #f06106 !important;
-    background-image: linear-gradient(135deg, #ff7d10 0%, #c74808 100%);
-    box-shadow: 0 6px 16px -6px rgba(199, 72, 8, 0.55);
+    background-image: linear-gradient(135deg, #ff7d10 0%, #c74808 100%) !important;
+    box-shadow: inset 4px 0 0 0 #ffd9a8, 0 6px 16px -6px rgba(199, 72, 8, 0.55) !important;
 }
 .fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-label,
 .fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-label {
     color: #ffffff !important;
-    font-weight: 600;
+    font-weight: 600 !important;
 }
 .fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-icon,
-.fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-icon {
+.fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-icon,
+.fi-sidebar .fi-sidebar-item.fi-active svg,
+.fi-sidebar .fi-sidebar-item-active svg {
     color: #ffffff !important;
 }
+/* active sub-item dot → saffron */
+.fi-sidebar .fi-sidebar-item.fi-active .fi-sidebar-item-grouped-border > div:last-child,
+.fi-sidebar .fi-sidebar-item-active .fi-sidebar-item-grouped-border > div:last-child {
+    background-color: #ff7d10 !important;
+}
 
-/* Sidebar toggle / misc icon buttons inside the sidebar */
+/* Icon buttons in sidebar */
 .fi-sidebar .fi-icon-btn {
-    color: #9e390e;
+    color: #9e390e !important;
 }
 .fi-sidebar .fi-icon-btn:hover {
-    color: #f06106;
-    background-color: #fff3e2;
+    color: #f06106 !important;
+    background-color: #fff3e2 !important;
 }
 
-/* Slim, themed scrollbar */
-.fi-sidebar-nav::-webkit-scrollbar {
-    width: 6px;
-}
-.fi-sidebar-nav::-webkit-scrollbar-thumb {
-    background: #f0ddc6;
-    border-radius: 4px;
-}
-.fi-sidebar-nav::-webkit-scrollbar-thumb:hover {
-    background: #e6b85c;
-}
+/* Slim themed scrollbar */
+.fi-sidebar-nav::-webkit-scrollbar { width: 6px; }
+.fi-sidebar-nav::-webkit-scrollbar-thumb { background: #f0ddc6; border-radius: 4px; }
+.fi-sidebar-nav::-webkit-scrollbar-thumb:hover { background: #e6b85c; }
+
+/* --- Breadcrumb path: subtle, maroon last item --- */
+.fi-breadcrumbs .fi-breadcrumbs-item a:hover { color: #c74808 !important; }
+.fi-breadcrumbs .fi-breadcrumbs-item:last-child { color: #7f310f !important; font-weight: 600 !important; }
 
 /* ================================================================== *
  * TOPBAR / NAVBAR — warm cream with a saffron→gold accent line
