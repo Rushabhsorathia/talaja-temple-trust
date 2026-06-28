@@ -2,6 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Facility;
+use App\Models\HomeService;
+use App\Models\HomeSlide;
+use App\Models\HomeStat;
 use App\Models\Setting;
 use App\Models\Temple;
 use Illuminate\Http\Request;
@@ -77,6 +81,31 @@ class HandleInertiaRequests extends Middleware
             ['icon' => 'trees', 'title' => 'Environment Initiatives', 'desc' => 'Tree plantation and green drives around the temple grounds.', 'image' => '/storage/facilities/tree.jpg'],
         ];
 
+        // CMS-managed home content (each record editable via Filament admin),
+        // cached briefly, with sensible fallbacks for a fresh install.
+        $slides = cache()->remember('cms.slides', 30, fn () => HomeSlide::active()->ordered()->get()->map(fn ($s) => [
+            'img' => $s->image_path ? asset('storage/'.$s->image_path) : null,
+            'title' => $s->title,
+            'sub' => $s->subtitle,
+            'tag' => $s->tag,
+            'button_label' => $s->button_label,
+            'button_href' => $s->button_href,
+        ])->all()) ?: $defaultSlides;
+
+        $services = cache()->remember('cms.services', 30, fn () => HomeService::active()->ordered()->get()->map(fn ($s) => [
+            'icon' => $s->icon, 'title' => $s->title, 'desc' => $s->description,
+            'href' => $s->href, 'badge' => $s->badge,
+        ])->all()) ?: $defaultServices;
+
+        $homeStats = cache()->remember('cms.stats', 30, fn () => HomeStat::active()->ordered()->get()->map(fn ($s) => [
+            'value' => $s->value, 'label' => $s->label, 'icon' => $s->icon,
+        ])->all()) ?: $defaultStats;
+
+        $facilities = cache()->remember('cms.facilities', 30, fn () => Facility::active()->ordered()->get()->map(fn ($f) => [
+            'icon' => $f->icon, 'title' => $f->title, 'desc' => $f->description,
+            'image' => $f->image_path ? asset('storage/'.$f->image_path) : null,
+        ])->all()) ?: $defaultFacilities;
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -100,10 +129,10 @@ class HandleInertiaRequests extends Middleware
                 'address' => $temple?->address ?? env('SITE_ADDRESS', 'Talaja, Gujarat'),
                 'logo' => $temple?->logo_path,
             ],
-            'homeStats' => $decode('home_stats', $defaultStats),
-            'heroSlides' => $decode('hero_slides', $defaultSlides),
-            'services' => $decode('services', $defaultServices),
-            'facilities' => $decode('facilities', $defaultFacilities),
+            'homeStats' => $homeStats,
+            'heroSlides' => $slides,
+            'services' => $services,
+            'facilities' => $facilities,
         ];
     }
 }
