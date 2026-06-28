@@ -21,7 +21,7 @@ class User extends Authenticatable implements FilamentUser
     protected $fillable = [
         'name', 'email', 'password', 'mobile', 'pan', 'name_as_per_pan',
         'address', 'type', 'is_active', 'mobile_verified_at', 'last_login_at',
-        'last_login_ip', 'mfa_settings',
+        'last_login_ip', 'mfa_settings', 'guide_mode',
     ];
 
     protected $hidden = [
@@ -37,6 +37,7 @@ class User extends Authenticatable implements FilamentUser
             'password' => 'hashed',
             'mfa_settings' => 'array',
             'is_active' => 'boolean',
+            'guide_mode' => 'boolean',
         ];
     }
 

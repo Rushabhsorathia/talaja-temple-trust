@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
+import GuideTour from '@/Components/GuideTour.vue';
 import {
     HandHeart, Phone, Mail, Menu, X, ChevronDown, User, LogOut,
     LayoutGrid, CalendarCheck, ShoppingBag, Wallet,
@@ -175,6 +176,7 @@ const logout = () => {
                                 </div>
                                 <Link href="/dashboard" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-saffron-50 hover:text-saffron-700" @click="userMenu=false"><LayoutGrid :size="16" /> My Account</Link>
                                 <Link href="/profile" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-saffron-50 hover:text-saffron-700" @click="userMenu=false"><User :size="16" /> Edit Profile</Link>
+                                <Link href="/account/settings" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-saffron-50 hover:text-saffron-700" @click="userMenu=false">⚙️ Account Settings</Link>
                                 <div class="my-1 border-t border-gray-100"></div>
                                 <Link href="/donate/my" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-saffron-50 hover:text-saffron-700" @click="userMenu=false"><Wallet :size="16" /> My Donations</Link>
                                 <Link href="/bookings/my" class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-saffron-50 hover:text-saffron-700" @click="userMenu=false"><CalendarCheck :size="16" /> My Bookings</Link>
@@ -272,6 +274,9 @@ const logout = () => {
         <main id="main-content" class="flex-1">
             <slot />
         </main>
+
+        <!-- Guided tour (only for logged-in devotees who enabled Guide Mode) -->
+        <GuideTour v-if="isDevotee && user?.guide_mode" />
 
         <!-- Footer -->
         <footer class="bg-maroon-950 text-gray-300">

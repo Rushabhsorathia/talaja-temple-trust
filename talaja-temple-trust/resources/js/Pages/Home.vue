@@ -15,26 +15,30 @@ const props = defineProps({
 
 const page = usePage();
 const iconMap = { users: Users, clock: Clock, soup: Soup, wifi: Wifi };
+const svcIconMap = { video: Video, heart: HandHeart, bed: Bed, bag: ShoppingBag };
 
-const slides = [
+// CMS-backed hero slides + services (editable via Admin → Settings).
+const slides = computed(() => (page.props.heroSlides && page.props.heroSlides.length) ? page.props.heroSlides : [
     { img: '/storage/hero/temple-1.jpg', title: 'Talaja Temple Trust', sub: 'A sacred abode of devotion and service', tag: '|| Jay Mataji ||' },
     { img: '/storage/hero/temple-2.jpg', title: 'Connect With the Divine', sub: 'Live darshan, donations and blessings — anytime, anywhere', tag: '|| Om Namah Shivay ||' },
     { img: '/storage/hero/temple-3.jpg', title: 'A Legacy of Faith', sub: 'Serving devotees with devotion for generations', tag: '|| Har Har Mahadev ||' },
-];
+]);
 
 const current = ref(0);
 let interval;
-const next = () => { current.value = (current.value + 1) % slides.length; };
+const next = () => { current.value = (current.value + 1) % slides.value.length; };
 const goTo = (i) => { current.value = i; clearInterval(interval); interval = setInterval(next, 5000); };
 onMounted(() => { interval = setInterval(next, 5000); });
 onUnmounted(() => clearInterval(interval));
 
-const services = [
-    { icon: Video, title: 'Live Darshan', desc: 'Experience divine darshan from anywhere in the world.', href: '/live-darshan', badge: 'Live', badgeColor: 'bg-red-500' },
-    { icon: HandHeart, title: 'Donate', desc: 'Support the temple with secure online donations (80G eligible).', href: '/donate' },
-    { icon: Bed, title: 'Bookings', desc: 'Reserve rooms and halls for your stay and events.', href: '/bookings' },
-    { icon: ShoppingBag, title: 'Shop', desc: 'Prasad, books and souvenirs delivered to your home.', href: '/shop' },
-];
+const services = computed(() => (page.props.services || []).map((s) => ({
+    icon: svcIconMap[s.icon] || Video,
+    title: s.title,
+    desc: s.desc,
+    href: s.href,
+    badge: s.badge,
+    badgeColor: 'bg-red-500',
+})));
 
 // DB-backed stats (editable via Admin → Settings → home_stats), with fallback.
 const stats = computed(() => (page.props.homeStats || []).map((s) => ({

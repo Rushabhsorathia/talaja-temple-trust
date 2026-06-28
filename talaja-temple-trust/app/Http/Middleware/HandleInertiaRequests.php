@@ -55,6 +55,19 @@ class HandleInertiaRequests extends Middleware
             ['value' => '24/7', 'label' => 'Live Darshan', 'icon' => 'wifi'],
         ];
 
+        $defaultSlides = [
+            ['img' => '/storage/hero/temple-1.jpg', 'title' => 'Talaja Temple Trust', 'sub' => 'A sacred abode of devotion and service', 'tag' => '|| Jay Mataji ||'],
+            ['img' => '/storage/hero/temple-2.jpg', 'title' => 'Connect With the Divine', 'sub' => 'Live darshan, donations and blessings — anytime, anywhere', 'tag' => '|| Om Namah Shivay ||'],
+            ['img' => '/storage/hero/temple-3.jpg', 'title' => 'A Legacy of Faith', 'sub' => 'Serving devotees with devotion for generations', 'tag' => '|| Har Har Mahadev ||'],
+        ];
+
+        $defaultServices = [
+            ['icon' => 'video', 'title' => 'Live Darshan', 'desc' => 'Experience divine darshan from anywhere in the world.', 'href' => '/live-darshan', 'badge' => 'Live'],
+            ['icon' => 'heart', 'title' => 'Donate', 'desc' => 'Support the temple with secure online donations (80G eligible).', 'href' => '/donate'],
+            ['icon' => 'bed', 'title' => 'Bookings', 'desc' => 'Reserve rooms and halls for your stay and events.', 'href' => '/bookings'],
+            ['icon' => 'bag', 'title' => 'Shop', 'desc' => 'Prasad, books and souvenirs delivered to your home.', 'href' => '/shop'],
+        ];
+
         $defaultFacilities = [
             ['icon' => 'bed', 'title' => 'Dharamshala', 'desc' => 'Comfortable accommodation for pilgrims with AC and non-AC rooms.', 'image' => '/storage/facilities/dharamshala.jpg'],
             ['icon' => 'home', 'title' => 'Vishram Gruh', 'desc' => 'A peaceful rest house for devotees seeking a quiet retreat.', 'image' => '/storage/about/temple.jpg'],
@@ -88,6 +101,8 @@ class HandleInertiaRequests extends Middleware
                 'logo' => $temple?->logo_path,
             ],
             'homeStats' => $decode('home_stats', $defaultStats),
+            'heroSlides' => $decode('hero_slides', $defaultSlides),
+            'services' => $decode('services', $defaultServices),
             'facilities' => $decode('facilities', $defaultFacilities),
         ];
     }

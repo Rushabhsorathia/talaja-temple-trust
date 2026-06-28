@@ -9,6 +9,7 @@ use App\Http\Controllers\LiveDarshanController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OtpController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AccountSettingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
@@ -88,6 +89,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Account settings (incl. Guide Mode toggle)
+    Route::get('/account/settings', [AccountSettingController::class, 'edit'])->name('account.settings');
+    Route::put('/account/settings', [AccountSettingController::class, 'update'])->name('account.settings.update');
 });
 
 require __DIR__.'/auth.php';
