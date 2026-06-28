@@ -13,18 +13,16 @@ class RecentDonations extends BaseWidget
 
     protected static ?int $sort = 3;
 
-    protected int|string|array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 1;
 
     public function table(Table $table): Table
     {
         return $table
-            ->query(Donation::query()->where('status', 'success')->latest()->limit(10))
+            ->query(Donation::query()->where('status', 'success')->latest()->limit(6))
             ->columns([
-                TextColumn::make('receipt_no')->searchable(),
-                TextColumn::make('donor_name')->default('-'),
-                TextColumn::make('amount')->money('INR'),
-                TextColumn::make('payment_mode')->badge(),
-                TextColumn::make('paid_at')->dateTime('d-m-Y H:i'),
+                TextColumn::make('donor_name')->label('Donor')->default('-')->limit(18),
+                TextColumn::make('amount')->money('INR')->weight('bold'),
+                TextColumn::make('paid_at')->dateTime('d M')->color('gray'),
             ])
             ->paginated(false);
     }
